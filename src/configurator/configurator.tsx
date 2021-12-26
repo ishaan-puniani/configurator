@@ -45,10 +45,15 @@ const Configurator = () => {
           ></GameModeAndReelSetMapper>
         </TabPane>
         <TabPane tab="Win Situations" key="winsituations" disabled={!data}>
-          <WinSituations data={data}></WinSituations>
+          <WinSituations
+            data={data}
+            path={"betlines"}
+            numberOfBetLines={data.numberOfBetLines}
+            handlePatch={handlePatch}
+          ></WinSituations>
         </TabPane>
         <TabPane tab="Special" key="special" disabled={!data}>
-          Content of Tab 3
+          Pick and drop configuration will go here
         </TabPane>
         <TabPane tab="Paytable" key="paytable" disabled={!data}>
           <PaytableForm data={data}></PaytableForm>

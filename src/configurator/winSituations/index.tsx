@@ -19,12 +19,12 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 20, offset: 4 },
   },
 };
-const WinSituations = ({ data }: any) => {
+const WinSituations = ({ data, path, numberOfBetLines, handlePatch }: any) => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
+    handlePatch(values);
     console.log("Received values of form:", values);
   };
-
   return (
     <Form
       name="paytable_form"
@@ -32,23 +32,24 @@ const WinSituations = ({ data }: any) => {
       onFinish={onFinish}
       form={form}
       initialValues={{
-        betlines: [
-          {
-            number: 0,
-            line: [1, 1, 1, 1, 1],
-          },
-          {
-            number: 1,
-            line: [1, 1, 1, 1, 1],
-          },
-        ],
+        [path]: data[path] || [...new Array(numberOfBetLines)],
+        // betlines: [
+        //   {
+        //     number: 0,
+        //     line: [1, 1, 1, 1, 1],
+        //   },
+        //   {
+        //     number: 1,
+        //     line: [1, 1, 1, 1, 1],
+        //   },
+        // ],
       }}
     >
-      {data.winType === "betlines" && (
+      {data.wincalculator === "betlines" && (
         <>
           <h3>Bet Lines</h3>
           <Form.List
-            name={["betlines"]}
+            name={[path]}
             rules={[
               {
                 validator: async (_, names) => {
@@ -64,9 +65,7 @@ const WinSituations = ({ data }: any) => {
               <>
                 {fields.map((field, index) => (
                   <Form.Item
-                    {...(index === 0
-                      ? formItemLayout
-                      : formItemLayoutWithOutLabel)}
+                    {...formItemLayout}
                     label={`Betline: ${index}:`}
                     required={false}
                     key={field.key}
