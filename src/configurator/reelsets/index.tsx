@@ -10,10 +10,12 @@ import { useState } from "react";
 import ReelSet from "./ReelSet";
 const { TabPane } = Tabs;
 
-const ReelsetsForm = () => {
+const ReelsetsForm = ({ data, path, handlePatch }: any) => {
   const [newReelsetName, setNewReelsetName] = useState("");
-  const [reelSets, setReelSets] = useState(["basic", "freespin"]);
-  const [activeKey, setActiveKey] = useState("basic");
+  const [reelSets, setReelSets] = useState<Array<string>>(
+    data && data[path] ? Object.keys(data[path]) : []
+  );
+  const [activeKey, setActiveKey] = useState("");
 
   const add = () => {
     if (newReelsetName.trim().length > 2) {
@@ -29,15 +31,25 @@ const ReelsetsForm = () => {
         title: "Confirm",
         icon: <ExclamationCircleOutlined />,
         content: "Are you sure you want to delete this reelset?",
-        okText: "Confirm",
+        okText: "Confirm And save",
         cancelText: "Cancel",
         onOk() {
           const updatedReelSets = reelSets.filter((rs) => rs !== targetKey);
+          const patch = { [path]: { ...data[path], [targetKey]: undefined } };
+          handlePatch(patch);
           setReelSets(updatedReelSets);
-          setActiveKey(updatedReelSets[0]);
+          if (updatedReelSets.length > 0) {
+            setActiveKey(updatedReelSets[0]);
+          } else {
+            setActiveKey("");
+          }
         },
       });
     }
+  };
+  const handleOnSave = (reelset: string, formData: any) => {
+    const patch = { [path]: { ...data[path], [reelset]: formData } };
+    handlePatch(patch);
   };
   return (
     <div>
@@ -45,7 +57,6 @@ const ReelsetsForm = () => {
         <Input
           value={newReelsetName}
           onChange={(e: any) => {
-            debugger;
             setNewReelsetName(e.target.value);
           }}
         ></Input>
@@ -60,7 +71,12 @@ const ReelsetsForm = () => {
       >
         {reelSets.map((pane) => (
           <TabPane tab={pane} key={pane}>
-            <ReelSet reelset={pane} />
+            <ReelSet
+              reelset={pane}
+              values={data[path][pane]}
+              handleOnSave={(values: any) => handleOnSave(pane, values)}
+              numberOfReels={data.numberOfReels}
+            />
           </TabPane>
         ))}
       </Tabs>

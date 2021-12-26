@@ -3,11 +3,22 @@ import { Form, Input, Button, InputNumber, Select } from "antd";
 import { useState } from "react";
 import ReelStrip from "./ReelStrip";
 
-const ReelSet = ({ reelset }: { reelset: string }) => {
+const ReelSet = ({
+  reelset,
+  values,
+  handleOnSave,
+  numberOfReels,
+}: {
+  reelset: string;
+  handleOnSave: any;
+  values: any;
+  numberOfReels: number;
+}) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
+    handleOnSave(values);
   };
 
   return (
@@ -17,9 +28,13 @@ const ReelSet = ({ reelset }: { reelset: string }) => {
       onFinish={onFinish}
       autoComplete="off"
       initialValues={{
-        fakereels: [["sym1", "sym2"], ["sym1", "sym2", "sym3"], []],
-        reels: [["sym1", "sym2"], ["sym1", "sym2", "sym3"], []],
-        initial: [["sym1", "sym2"], ["sym1", "sym2", "sym3"], []],
+        fakereels: values
+          ? [...values["fakereels"]]
+          : [...new Array(numberOfReels)],
+        reels: values ? [...values["reels"]] : [...new Array(numberOfReels)],
+        initial: values
+          ? [...values["initial"]]
+          : [...new Array(numberOfReels)],
       }}
     >
       <h3>Fake Reels: {reelset}</h3>

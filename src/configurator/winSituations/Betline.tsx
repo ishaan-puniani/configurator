@@ -3,11 +3,11 @@ import { Form, Input, Button, InputNumber, Select } from "antd";
 import { useState } from "react";
 import { Tag, WithContext as ReactTags } from "react-tag-input";
 
-const Betline = ({ fieldPath, field, form }: any) => {
+const Betline = ({ fieldPath, name, field, form }: any) => {
   const [tags, setTags] = useState<Array<Tag>>(
-    form.getFieldValue([...fieldPath, field.name, "line"])
+    form.getFieldValue([...fieldPath, name])
       ? form
-          .getFieldValue([...fieldPath, field.name, "line"])
+          .getFieldValue([...fieldPath, name])
           .map((tg: string, idx: number) => ({ id: "" + idx, text: tg }))
       : []
   );
@@ -17,8 +17,8 @@ const Betline = ({ fieldPath, field, form }: any) => {
     setTags(updatedTags);
     form.setFields([
       {
-        name: [...fieldPath, field.name],
-        value: updatedTags.map((t) => t.text),
+        name: [...fieldPath, name],
+        value: updatedTags.map((t) => parseInt(t.text)),
       },
     ]);
   };
@@ -40,8 +40,8 @@ const Betline = ({ fieldPath, field, form }: any) => {
 
     form.setFields([
       {
-        name: [...fieldPath, field.name],
-        value: newTags.map((t) => t.text),
+        name: [...fieldPath, name],
+        value: newTags.map((t) => parseInt(t.text)),
       },
     ]);
   };
@@ -62,41 +62,32 @@ const Betline = ({ fieldPath, field, form }: any) => {
   //   }
   const suggestions: Array<Tag> = [];
   return (
-    <>
-      <Form.Item
-        label="number"
-        name={[field.key, "number"]}
-        rules={[{ required: true, message: "Please input number!" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name={[field.key, "line"]}
-        // name={`${field.key}.line`}
-        rules={[
-          {
-            validator: (rule, value) => {
-              return Promise.resolve();
-              // console.log(form.getFieldValue("dynamicReelLinking"));
-              // console.log(form.getFieldValue("clientId"));
-              // return value.length > 2
-              //   ? Promise.resolve()
-              //   : Promise.reject(new Error("Should be a number"));
-            },
+    <Form.Item
+      name={[field.name, name]}
+      // name={`${field.key}.line`}
+      rules={[
+        {
+          validator: (rule, value) => {
+            return Promise.resolve();
+            // console.log(form.getFieldValue("dynamicReelLinking"));
+            // console.log(form.getFieldValue("clientId"));
+            // return value.length > 2
+            //   ? Promise.resolve()
+            //   : Promise.reject(new Error("Should be a number"));
           },
-        ]}
-      >
-        <ReactTags
-          tags={tags}
-          suggestions={suggestions}
-          handleDelete={handleDelete}
-          handleAddition={handleAddition}
-          // handleDrag={this.handleDrag}
-          // handleTagClick={this.handleTagClick}
-        />
-      </Form.Item>
-    </>
+        },
+      ]}
+    >
+      {/* <Input placeholder="multiplier" style={{ width: "60%" }} /> */}
+      <ReactTags
+        tags={tags}
+        suggestions={suggestions}
+        handleDelete={handleDelete}
+        handleAddition={handleAddition}
+        // handleDrag={this.handleDrag}
+        // handleTagClick={this.handleTagClick}
+      />
+    </Form.Item>
   );
 };
 

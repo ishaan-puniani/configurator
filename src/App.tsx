@@ -5,13 +5,13 @@ import BasicInfoForm from "./configurator/basicInfo";
 import ReelsetsForm from "./configurator/reelsets";
 import ReelSet from "./configurator/reelsets/ReelSet";
 import WinSituations from "./configurator/winSituations";
-import Paytable from "./configurator/paytable";
 import PaytableForm from "./configurator/paytable/PaytableForm";
+import Configurator from "./configurator/configurator";
 
 function App() {
   return (
     <div>
-      <PaytableForm></PaytableForm>
+      <Configurator></Configurator>
     </div>
   );
 }

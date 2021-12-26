@@ -1,9 +1,18 @@
 import { Form, Input, Button, InputNumber, Select } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
-const BasicInfoForm = () => {
+const BasicInfoForm = ({ data, handleCreate }: any) => {
+  const [winType, setWinType] = useState<string>(
+    data ? data.wincalculator : ""
+  );
+  const [reelLinking, setReelLinking] = useState<string>(
+    data ? data.reelLinking : ""
+  );
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    handleCreate(values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -16,9 +25,9 @@ const BasicInfoForm = () => {
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
-      initialValues={{ remember: true }}
+      initialValues={data}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      //  onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
@@ -42,7 +51,6 @@ const BasicInfoForm = () => {
       >
         <InputNumber />
       </Form.Item>
-
       <Form.Item
         label="symbolsPerReel"
         name="symbolsPerReel"
@@ -51,19 +59,26 @@ const BasicInfoForm = () => {
         <InputNumber />
       </Form.Item>
       <Form.Item
+        name={"wincalculator"}
         label="wincalculator"
-        name="wincalculator"
         rules={[{ required: true, message: "Please input wincalculator!" }]}
       >
-        <InputNumber />
+        <Select onChange={(selValue: string) => setWinType(selValue)}>
+          <Select.Option value="betlines">Betlines</Select.Option>
+          <Select.Option value="betways">Betways</Select.Option>
+        </Select>
       </Form.Item>
-      <Form.Item
-        label="numberOfBetLines"
-        name="numberOfBetLines"
-        rules={[{ required: true, message: "Please input numberOfBetLines!" }]}
-      >
-        <InputNumber />
-      </Form.Item>
+      {winType === "betlines" && (
+        <Form.Item
+          label="numberOfBetLines"
+          name="numberOfBetLines"
+          rules={[
+            { required: true, message: "Please input numberOfBetLines!" },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+      )}
       <Form.Item
         label="symbols"
         name="symbols"
@@ -96,123 +111,104 @@ const BasicInfoForm = () => {
         <Checkbox>Dynamic Reel Linking</Checkbox>
       </Form.Item> */}
       <Form.Item name="reelLinking" label="reelLinking">
-        <Select defaultValue="">
-          <Select.Option value="">None</Select.Option>
+        <Select
+          onChange={(selReelLinking: string) => setReelLinking(selReelLinking)}
+          defaultActiveFirstOption
+        >
+          <Select.Option value={0}>None</Select.Option>
           <Select.Option value="static">Static</Select.Option>
           <Select.Option value="dynamic">Dynamic</Select.Option>
-          <Select.Option value="static_chuncked">Static Chuncked</Select.Option>
-          <Select.Option value="dynamic_chuncked">
+          <Select.Option value="static_chuncked" disabled>
+            Static Chuncked
+          </Select.Option>
+          <Select.Option value="dynamic_chuncked" disabled>
             Dynamic Chuncked
           </Select.Option>
         </Select>
       </Form.Item>
-      <Form.Item
-        label="connectedReels"
-        name="connectedReels"
-        rules={[{ required: false }]}
-      >
-        <Select
-          mode="tags"
-          style={{ width: "100%" }}
-          placeholder="Please select"
-          defaultValue={[]}
-        ></Select>
-      </Form.Item>
-      <Form.List
-        name="availableLinkableReels"
-        rules={
-          [
-            //   {
-            //     validator: async (_, names) => {
-            //       if (!names || names.length < 2) {
-            //         return Promise.reject(new Error("At least 2 passengers"));
-            //       }
-            //     },
-            //   },
-          ]
-        }
-      >
-        {(fields, { add, remove }, { errors }) => (
-          <>
-            {fields.map((field, index) => (
-              <Form.Item
-                // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                //label={index === 0 ? "Passengers" : ""}
-                label="availableLinkableReels"
-                required={false}
-                key={field.key}
-              >
-                {/* <Form.Item
-                  {...field}
-                  validateTrigger={["onChange", "onBlur"]}
-                  rules={[
-                    {
-                      required: true,
-                      whitespace: true,
-                      message:
-                        "Please input passenger's name or delete this field.",
-                    },
-                  ]}
-                  noStyle
-                >
-                  <Input
-                    placeholder="passenger name"
-                    style={{ width: "60%" }}
-                  />
-                    </Form.Item>
-                     */}
+      {reelLinking === "static" && (
+        <Form.Item
+          label="connectedReels"
+          name="connectedReels"
+          rules={[{ required: false }]}
+        >
+          <Select
+            mode="tags"
+            style={{ width: "100%" }}
+            placeholder="Please select"
+            defaultValue={[]}
+          ></Select>
+        </Form.Item>
+      )}
+      {reelLinking === "dynamic" && (
+        <Form.List
+          name="availableLinkableReels"
+          rules={
+            [
+              //   {
+              //     validator: async (_, names) => {
+              //       if (!names || names.length < 2) {
+              //         return Promise.reject(new Error("At least 2 passengers"));
+              //       }
+              //     },
+              //   },
+            ]
+          }
+        >
+          {(fields, { add, remove }, { errors }) => (
+            <>
+              {fields.map((field, index) => (
                 <Form.Item
-                  name={field.key}
-                  rules={[
-                    {
-                      validator: (rule, value) => {
-                        debugger;
-                        console.log(form.getFieldValue("dynamicReelLinking"));
-                        console.log(form.getFieldValue("clientId"));
-                        return value.length > 2
-                          ? Promise.resolve()
-                          : Promise.reject(new Error("Should be a number"));
-                      },
-                    },
-                  ]}
+                  // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                  //label={index === 0 ? "Passengers" : ""}
+                  label={`availableLinkableReels ${index}: `}
+                  required={false}
+                  key={field.key}
                 >
-                  <Select
-                    mode="tags"
-                    style={{ width: "100%" }}
-                    placeholder="Please select"
-                    defaultValue={[]}
-                  ></Select>
+                  <Form.Item
+                    name={field.name}
+                    rules={[
+                      {
+                        validator: (rule, value) => {
+                          return Promise.resolve();
+                          // console.log(form.getFieldValue("dynamicReelLinking"));
+                          // console.log(form.getFieldValue("clientId"));
+                          // return value.length > 2
+                          //   ? Promise.resolve()
+                          //   : Promise.reject(new Error("Should be a number"));
+                        },
+                      },
+                    ]}
+                  >
+                    <Select
+                      mode="tags"
+                      style={{ width: "80%" }}
+                      placeholder="Please select"
+                      defaultValue={[]}
+                    ></Select>
+                  </Form.Item>
+                  <MinusCircleOutlined
+                    className="dynamic-delete-button"
+                    onClick={() => remove(field.name)}
+                  />
                 </Form.Item>
-                <MinusCircleOutlined
-                  className="dynamic-delete-button"
-                  onClick={() => remove(field.name)}
-                />
+              ))}
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  style={{ width: "60%" }}
+                  icon={<PlusOutlined />}
+                >
+                  Add Linkable reel
+                </Button>
+
+                <Form.ErrorList errors={errors} />
               </Form.Item>
-            ))}
-            <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                style={{ width: "60%" }}
-                icon={<PlusOutlined />}
-              >
-                Add field
-              </Button>
-              <Button
-                type="dashed"
-                onClick={() => {
-                  add("The head item", 0);
-                }}
-                style={{ width: "60%", marginTop: "20px" }}
-                icon={<PlusOutlined />}
-              >
-                Add field at head
-              </Button>
-              <Form.ErrorList errors={errors} />
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
+            </>
+          )}
+        </Form.List>
+      )}
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Submit
