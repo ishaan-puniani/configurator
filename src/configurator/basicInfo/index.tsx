@@ -28,7 +28,6 @@ const BasicInfoForm = () => {
       >
         <Input />
       </Form.Item>
-
       <Form.Item
         label="name"
         name="name"
@@ -36,7 +35,6 @@ const BasicInfoForm = () => {
       >
         <Input />
       </Form.Item>
-
       <Form.Item
         label="numberOfReels"
         name="numberOfReels"
@@ -44,10 +42,25 @@ const BasicInfoForm = () => {
       >
         <InputNumber />
       </Form.Item>
+
       <Form.Item
         label="symbolsPerReel"
         name="symbolsPerReel"
         rules={[{ required: true, message: "Please input symbolsPerReel!" }]}
+      >
+        <InputNumber />
+      </Form.Item>
+      <Form.Item
+        label="wincalculator"
+        name="wincalculator"
+        rules={[{ required: true, message: "Please input wincalculator!" }]}
+      >
+        <InputNumber />
+      </Form.Item>
+      <Form.Item
+        label="numberOfBetLines"
+        name="numberOfBetLines"
+        rules={[{ required: true, message: "Please input numberOfBetLines!" }]}
       >
         <InputNumber />
       </Form.Item>
@@ -93,7 +106,6 @@ const BasicInfoForm = () => {
           </Select.Option>
         </Select>
       </Form.Item>
-
       <Form.Item
         label="connectedReels"
         name="connectedReels"
@@ -106,7 +118,6 @@ const BasicInfoForm = () => {
           defaultValue={[]}
         ></Select>
       </Form.Item>
-
       <Form.List
         name="availableLinkableReels"
         rules={
@@ -202,7 +213,6 @@ const BasicInfoForm = () => {
           </>
         )}
       </Form.List>
-
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Submit
