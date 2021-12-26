@@ -49,7 +49,7 @@ const Configurator = () => {
         <TabPane tab="Win Situations" key="winsituations" disabled={!data}>
           <WinSituations
             data={data}
-            path={"betlines"}
+            path={"betLines"}
             numberOfBetLines={data ? data.numberOfBetLines : 0}
             handlePatch={handlePatch}
           ></WinSituations>
@@ -65,7 +65,7 @@ const Configurator = () => {
             handlePatch={handlePatch}
           ></PaytableForm>
         </TabPane>
-        <TabPane tab="Publish" key="publish" disabled={!data}>
+        <TabPane tab="Upload To Server" key="publish" disabled={!data}>
           Content for publish
         </TabPane>
       </Tabs>

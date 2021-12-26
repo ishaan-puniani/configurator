@@ -79,7 +79,7 @@ const WinSituations = ({ data, path, numberOfBetLines, handlePatch }: any) => {
                     <Betline
                       name={"line"}
                       field={field}
-                      fieldPath={["betlines", field.name]}
+                      fieldPath={[path, field.name]}
                       form={form}
                     ></Betline>
 
