@@ -1,4 +1,4 @@
-import { Form, Input, Button, InputNumber } from "antd";
+import { Form, Input, Button, InputNumber, Checkbox } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 const formItemLayout = {
@@ -115,6 +115,12 @@ const PaytableForm = ({ data, path, symbols, handlePatch }: any) => {
                     // key={[field.key, "number"]}
                     noStyle
                   >
+                    <Form.Item
+                      name={[field.name, "hidden"]}
+                      valuePropName="checked"
+                    >
+                      <Checkbox>Hidden</Checkbox>
+                    </Form.Item>
                     <Input placeholder="type" style={{ width: "60%" }} />
                   </Form.Item>
 

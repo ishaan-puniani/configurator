@@ -8,11 +8,13 @@ const ReelSet = ({
   values,
   handleOnSave,
   numberOfReels,
+  symbolsSuggestions,
 }: {
   reelset: string;
   handleOnSave: any;
   values: any;
   numberOfReels: number;
+  symbolsSuggestions: Array<string>;
 }) => {
   const [form] = Form.useForm();
 
@@ -67,6 +69,7 @@ const ReelSet = ({
                   key={field.key}
                 >
                   <ReelStrip
+                    symbolsSuggestions={symbolsSuggestions}
                     fieldPath={["fakereels"]}
                     field={field}
                     form={form}
@@ -104,7 +107,12 @@ const ReelSet = ({
                   required={false}
                   key={field.key}
                 >
-                  <ReelStrip fieldPath={["reels"]} field={field} form={form} />
+                  <ReelStrip
+                    symbolsSuggestions={symbolsSuggestions}
+                    fieldPath={["reels"]}
+                    field={field}
+                    form={form}
+                  />
                 </Form.Item>
               ))}
               <Form.Item>
@@ -139,6 +147,7 @@ const ReelSet = ({
                   key={field.key}
                 >
                   <ReelStrip
+                    symbolsSuggestions={symbolsSuggestions}
                     fieldPath={["initial"]}
                     field={field}
                     form={form}

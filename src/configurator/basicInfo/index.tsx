@@ -1,6 +1,9 @@
-import { Form, Input, Button, InputNumber, Select } from "antd";
+import { Form, Input, Button, InputNumber, Select, Row } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import TagInput from "./TagInput";
+import TagInputForChild from "./TagInputForChild";
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -95,30 +98,25 @@ const BasicInfoForm = ({ data, handleCreate }: any) => {
           <InputNumber />
         </Form.Item>
       )}
-      <Form.Item
-        label="symbols"
+
+      <TagInput
         name="symbols"
+        form={form}
+        label="symbols"
         rules={[{ required: true, message: "Please input symbols!" }]}
-      >
-        <Select
-          mode="tags"
-          style={{ width: "100%" }}
-          placeholder="Please select"
-          defaultValue={[]}
-        ></Select>
-      </Form.Item>
-      <Form.Item
-        label="gameModes"
+      ></TagInput>
+      <TagInput
+        name="clubbedSymbols"
+        form={form}
+        label="clubbedSymbols"
+      ></TagInput>
+      <TagInput
         name="gameModes"
+        form={form}
+        label="gameModes"
         rules={[{ required: true, message: "Please input gameModes!" }]}
-      >
-        <Select
-          mode="tags"
-          style={{ width: "100%" }}
-          placeholder="Please select"
-          defaultValue={[]}
-        ></Select>
-      </Form.Item>
+      ></TagInput>
+
       {/* <Form.Item
         name="dynamicReelLinking"
         valuePropName="checked"
@@ -143,18 +141,13 @@ const BasicInfoForm = ({ data, handleCreate }: any) => {
         </Select>
       </Form.Item>
       {reelLinking === "static" && (
-        <Form.Item
-          label="connectedReels"
+        <TagInput
           name="connectedReels"
-          rules={[{ required: false }]}
-        >
-          <Select
-            mode="tags"
-            style={{ width: "100%" }}
-            placeholder="Please select"
-            defaultValue={[]}
-          ></Select>
-        </Form.Item>
+          form={form}
+          label="connectedReels"
+          valueType="integer"
+          rules={[{ required: true, message: "Please input connectedReels!" }]}
+        ></TagInput>
       )}
       {reelLinking === "dynamic" && (
         <Form.List
@@ -174,14 +167,21 @@ const BasicInfoForm = ({ data, handleCreate }: any) => {
           {(fields, { add, remove }, { errors }) => (
             <>
               {fields.map((field, index) => (
-                <Form.Item
-                  // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  //label={index === 0 ? "Passengers" : ""}
-                  label={`availableLinkableReels ${index}: `}
-                  required={false}
-                  key={field.key}
-                >
-                  <Form.Item
+                <Row>
+                  <TagInputForChild
+                    label={`LinkableReels ${index}: `}
+                    fieldPath={["availableLinkableReels"]}
+                    field={field}
+                    form={form}
+                    valueType="integer"
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "Please input LinkableReels!",
+                    //   },
+                    // ]}
+                  ></TagInputForChild>
+                  {/* <Form.Item
                     name={field.name}
                     rules={[
                       {
@@ -202,12 +202,12 @@ const BasicInfoForm = ({ data, handleCreate }: any) => {
                       placeholder="Please select"
                       defaultValue={[]}
                     ></Select>
-                  </Form.Item>
+                  </Form.Item> */}
                   <MinusCircleOutlined
                     className="dynamic-delete-button"
                     onClick={() => remove(field.name)}
                   />
-                </Form.Item>
+                </Row>
               ))}
               <Form.Item {...formItemLayoutWithOutLabel}>
                 <Button

@@ -11,6 +11,10 @@ import ReelSet from "./ReelSet";
 const { TabPane } = Tabs;
 
 const ReelsetsForm = ({ data, path, handlePatch }: any) => {
+  const symbolsSuggestions = (data.symbols || []).map((sym: string) => ({
+    id: sym,
+    text: sym,
+  }));
   const [newReelsetName, setNewReelsetName] = useState("");
   const [reelSets, setReelSets] = useState<Array<string>>(
     data && data[path] ? Object.keys(data[path]) : []
@@ -73,6 +77,7 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
           <TabPane tab={pane} key={pane}>
             <ReelSet
               reelset={pane}
+              symbolsSuggestions={symbolsSuggestions}
               values={
                 data && data[path] && data[path][pane] ? data[path][pane] : {}
               }

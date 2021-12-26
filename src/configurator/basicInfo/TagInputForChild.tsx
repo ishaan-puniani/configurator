@@ -3,7 +3,16 @@ import { Form, Input, Button, InputNumber, Select } from "antd";
 import { useState } from "react";
 import { Tag, WithContext as ReactTags } from "react-tag-input";
 
-const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
+const TagInputForChild = ({
+  fieldPath,
+  field,
+  form,
+  symbolsSuggestions,
+  label,
+  rules,
+  valueType,
+}: any) => {
+  debugger;
   const [tags, setTags] = useState<Array<Tag>>(
     form.getFieldValue([...fieldPath, field.name])
       ? form
@@ -18,7 +27,9 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
     form.setFields([
       {
         name: [...fieldPath, field.name],
-        value: updatedTags.map((t) => t.text),
+        value: updatedTags.map((t) =>
+          valueType === "integer" ? parseInt(t.text) : t.text
+        ),
       },
     ]);
   };
@@ -41,7 +52,9 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
     form.setFields([
       {
         name: [...fieldPath, field.name],
-        value: newTags.map((t) => t.text),
+        value: newTags.map((t) =>
+          valueType === "integer" ? parseInt(t.text) : t.text
+        ),
       },
     ]);
   };
@@ -63,19 +76,22 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
 
   return (
     <Form.Item
-      name={field.key}
-      rules={[
-        {
-          validator: (rule, value) => {
-            return Promise.resolve();
-            // console.log(form.getFieldValue("dynamicReelLinking"));
-            // console.log(form.getFieldValue("clientId"));
-            // return value.length > 2
-            //   ? Promise.resolve()
-            //   : Promise.reject(new Error("Should be a number"));
-          },
-        },
-      ]}
+      name={[...fieldPath, field.name]}
+      label={label}
+      help="You can use , (comma) as separator for adding multiple values together and hit enter. Feel free to paste value as well"
+      rules={rules}
+      // rules={[
+      //   {
+      //     validator: (rule, value) => {
+      //       return Promise.resolve();
+      //       // console.log(form.getFieldValue("dynamicReelLinking"));
+      //       // console.log(form.getFieldValue("clientId"));
+      //       // return value.length > 2
+      //       //   ? Promise.resolve()
+      //       //   : Promise.reject(new Error("Should be a number"));
+      //     },
+      //   },
+      // ]}
     >
       <ReactTags
         tags={tags}
@@ -89,4 +105,4 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
   );
 };
 
-export default ReelStrip;
+export default TagInputForChild;
