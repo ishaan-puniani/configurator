@@ -13,9 +13,11 @@ const Configurator = () => {
   const [data, setData] = useState<any>(getData());
   const handleCreate = (formData: any) => {
     create(formData);
+    setData(getData());
   };
   const handlePatch = (formData: any) => {
     patch(formData);
+    setData(getData());
   };
   return (
     <>
@@ -48,7 +50,7 @@ const Configurator = () => {
           <WinSituations
             data={data}
             path={"betlines"}
-            numberOfBetLines={data.numberOfBetLines}
+            numberOfBetLines={data ? data.numberOfBetLines : 0}
             handlePatch={handlePatch}
           ></WinSituations>
         </TabPane>
@@ -56,7 +58,12 @@ const Configurator = () => {
           Pick and drop configuration will go here
         </TabPane>
         <TabPane tab="Paytable" key="paytable" disabled={!data}>
-          <PaytableForm data={data}></PaytableForm>
+          <PaytableForm
+            data={data}
+            path="paytableObj"
+            symbols={data ? data.symbols : []}
+            handlePatch={handlePatch}
+          ></PaytableForm>
         </TabPane>
         <TabPane tab="Publish" key="publish" disabled={!data}>
           Content for publish

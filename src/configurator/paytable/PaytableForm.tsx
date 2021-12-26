@@ -1,6 +1,5 @@
 import { Form, Input, Button, InputNumber } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-const symArray = ["sym1", "sym2"];
 
 const formItemLayout = {
   labelCol: {
@@ -19,9 +18,10 @@ const formItemLayoutWithOutLabel = {
   },
 };
 
-const PaytableForm = ({ data }: any) => {
+const PaytableForm = ({ data, path, symbols, handlePatch }: any) => {
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
+    handlePatch(values);
   };
 
   return (
@@ -30,40 +30,42 @@ const PaytableForm = ({ data }: any) => {
       {...formItemLayoutWithOutLabel}
       onFinish={onFinish}
       initialValues={{
-        paytableObj: {
-          sym1: [
-            {
-              freespins: 0,
-              multiplier: 0,
-              number: 0,
-              type: "scatter",
-            },
-            {
-              freespins: 2,
-              multiplier: 5,
-              number: 5,
-              type: "scatter",
-            },
-            {
-              freespins: 5,
-              multiplier: 6,
-              number: 7,
-              type: "scatter",
-            },
-          ],
-        },
+        [path]: data[path] || {},
+        // paytableObj: {
+        //   sym1: [
+        //     {
+        //       freespins: 0,
+        //       multiplier: 0,
+        //       number: 0,
+        //       type: "scatter",
+        //     },
+        //     {
+        //       freespins: 2,
+        //       multiplier: 5,
+        //       number: 5,
+        //       type: "scatter",
+        //     },
+        //     {
+        //       freespins: 5,
+        //       multiplier: 6,
+        //       number: 7,
+        //       type: "scatter",
+        //     },
+        //   ],
+        // },
       }}
     >
       <h3>Paytable</h3>
-      {symArray.map((sym) => (
+      {symbols.map((sym: string) => (
         <Form.List
-          name={["paytableObj", sym]}
+          name={[path, sym]}
           rules={[
             {
               validator: async (_, names) => {
-                if (!names || names.length < 2) {
-                  return Promise.reject(new Error("At least 2 passengers"));
-                }
+                return Promise.resolve();
+                // if (!names || names.length < 2) {
+                //   return Promise.reject(new Error("At least 2 passengers"));
+                // }
               },
             },
           ]}
@@ -73,10 +75,8 @@ const PaytableForm = ({ data }: any) => {
               <h4>{sym}</h4>
               {fields.map((field, index) => (
                 <Form.Item
-                  {...(index === 0
-                    ? formItemLayout
-                    : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? "Passengers" : ""}
+                  {...formItemLayout}
+                  label={`payout: ${index}`}
                   required={false}
                   key={field.key}
                 >
@@ -126,7 +126,7 @@ const PaytableForm = ({ data }: any) => {
                   ) : null}
                 </Form.Item>
               ))}
-              <Form.Item>
+              <Form.Item {...formItemLayoutWithOutLabel}>
                 <Button
                   type="dashed"
                   onClick={() => add()}
