@@ -2,6 +2,7 @@ import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { create, getData, patch } from "../storage";
 import BasicInfoForm from "./basicInfo";
+import GameModeAndReelSetMapper from "./gameModeAndReelSetMapper";
 import PaytableForm from "./paytable/PaytableForm";
 import ReelsetsForm from "./reelsets";
 import WinSituations from "./winSituations";
@@ -37,7 +38,11 @@ const Configurator = () => {
           key="gamemodes"
           disabled={!data}
         >
-          Content of Tab 3
+          <GameModeAndReelSetMapper
+            data={data}
+            path="reelsetMapping"
+            handlePatch={handlePatch}
+          ></GameModeAndReelSetMapper>
         </TabPane>
         <TabPane tab="Win Situations" key="winsituations" disabled={!data}>
           <WinSituations data={data}></WinSituations>

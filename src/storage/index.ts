@@ -9,7 +9,6 @@ export const patch = (fields: any) => {
 };
 
 export const getData = (): any => {
-  debugger;
   const retrievedObject: any = localStorage.getItem(STORAGE_KEY);
   return JSON.parse(retrievedObject);
 };

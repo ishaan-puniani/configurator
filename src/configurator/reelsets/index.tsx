@@ -73,7 +73,9 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
           <TabPane tab={pane} key={pane}>
             <ReelSet
               reelset={pane}
-              values={data[path][pane]}
+              values={
+                data && data[path] && data[path][pane] ? data[path][pane] : {}
+              }
               handleOnSave={(values: any) => handleOnSave(pane, values)}
               numberOfReels={data.numberOfReels}
             />

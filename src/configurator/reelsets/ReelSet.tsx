@@ -28,13 +28,18 @@ const ReelSet = ({
       onFinish={onFinish}
       autoComplete="off"
       initialValues={{
-        fakereels: values
-          ? [...values["fakereels"]]
-          : [...new Array(numberOfReels)],
-        reels: values ? [...values["reels"]] : [...new Array(numberOfReels)],
-        initial: values
-          ? [...values["initial"]]
-          : [...new Array(numberOfReels)],
+        fakereels:
+          values && values["fakereels"]
+            ? [...values["fakereels"]]
+            : [...new Array(numberOfReels)],
+        reels:
+          values && values["reels"]
+            ? [...values["reels"]]
+            : [...new Array(numberOfReels)],
+        initial:
+          values && values["initial"]
+            ? [...values["initial"]]
+            : [...new Array(numberOfReels)],
       }}
     >
       <h3>Fake Reels: {reelset}</h3>
