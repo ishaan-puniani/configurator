@@ -10,6 +10,7 @@ const TagInput = ({
   label,
   rules,
   valueType,
+  help,
 }: any) => {
   const [tags, setTags] = useState<Array<Tag>>(
     form.getFieldValue([name])
@@ -76,7 +77,9 @@ const TagInput = ({
     <Form.Item
       name={name}
       label={label}
-      help="You can use , (comma) as separator for adding multiple values together and hit enter. Feel free to paste value as well"
+      help={`${
+        help ? help : ""
+      } You can use , (comma) as separator for adding multiple values together and hit enter. Feel free to paste value as well`}
       rules={rules}
       // rules={[
       //   {

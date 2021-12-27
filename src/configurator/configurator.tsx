@@ -4,6 +4,7 @@ import { create, getData, patch } from "../storage";
 import BasicInfoForm from "./basicInfo";
 import GameModeAndReelSetMapper from "./gameModeAndReelSetMapper";
 import PaytableForm from "./paytable/PaytableForm";
+import PublishForm from "./publish";
 import ReelsetsForm from "./reelsets";
 import WinSituations from "./winSituations";
 
@@ -66,7 +67,7 @@ const Configurator = () => {
           ></PaytableForm>
         </TabPane>
         <TabPane tab="Upload To Server" key="publish" disabled={!data}>
-          Content for publish
+          <PublishForm></PublishForm>
         </TabPane>
       </Tabs>
     </>
