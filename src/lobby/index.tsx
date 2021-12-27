@@ -1,5 +1,9 @@
-import { Avatar, Button, List } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { Avatar, Button, List, Space } from "antd";
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { create } from "../storage";
+import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -18,7 +22,9 @@ const initConfig = {
 };
 
 const Lobby = () => {
+  const navigate = useNavigate();
   const [games, setGames] = useState<Array<any>>([]);
+  const [visibleGamePanel, setVisibleGamePanel] = useState<boolean>(false);
 
   const playGameInIframe = (configurationId: any) => {
     const iFrameLaunchConfig = {
@@ -29,9 +35,16 @@ const Lobby = () => {
       launchType: "iframe",
       gameContainerId: "gamecontainer",
     };
-    launchGame(iFrameLaunchConfig);
+    launchGame(iFrameLaunchConfig, (_iframeRef: any, error: any) => {
+      debugger;
+      if (!error) {
+        setVisibleGamePanel(true);
+      } else {
+        setVisibleGamePanel(false);
+      }
+    });
   };
-  const playGameInPopup = (configurationId: any) => {
+  const playGameInPopup = (configurationId: string) => {
     const popupLaunchConfig = {
       operatorId: initConfig.operatorId,
       configId: configurationId,
@@ -43,6 +56,23 @@ const Lobby = () => {
       replace: "",
     };
     launchGame(popupLaunchConfig);
+  };
+  const onEditConfiguration = async (configurationId: string) => {
+    var config = {
+      method: "get",
+      url: `${initConfig.server}/api/get-config/${initConfig.operatorId}/${configurationId}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    //@ts-ignore
+    const resp = await axios(config);
+    if (resp.data && resp.data.configuration) {
+      create(resp.data.configuration);
+      navigate("/", { replace: true });
+    } else {
+      alert("Some error occured");
+    }
   };
   useEffect(() => {
     const fetchGames = async () => {
@@ -68,7 +98,17 @@ const Lobby = () => {
   }, []);
   return (
     <>
-      <div id="gamecontainer" style={{ width: "960px", height: "540px" }}></div>
+      <div style={{ textAlign: "center" }}>
+        <div
+          id="gamecontainer"
+          style={{
+            width: "960px",
+            height: "540px",
+            // display: visibleGamePanel ? "" : "none",
+            margin: "auto",
+          }}
+        ></div>
+      </div>
       {games && (
         <List
           itemLayout="horizontal"
@@ -79,6 +119,9 @@ const Lobby = () => {
                 <Button onClick={() => playGameInIframe(item.configurationId)}>
                   Play
                 </Button>,
+                // <Button onClick={() => playGameInIframe(item.configurationId)}>
+                //   Play
+                // </Button>,
                 <Button onClick={() => playGameInPopup(item.configurationId)}>
                   Open Popup
                 </Button>,
@@ -89,7 +132,19 @@ const Lobby = () => {
                 title={
                   <a href="https://ant.design">{item.configuration.name}</a>
                 }
-                description={`configurationId: ${item.configurationId}`}
+                description={
+                  <div>
+                    configurationId: <b>${item.configurationId}</b>{" "}
+                    <Button
+                      type="primary"
+                      size="small"
+                      icon={<EditOutlined />}
+                      onClick={() => onEditConfiguration(item.configurationId)}
+                    >
+                      Edit
+                    </Button>
+                  </div>
+                }
               />
             </List.Item>
           )}

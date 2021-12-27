@@ -12,7 +12,7 @@ const PublishForm = () => {
     });
     var config = {
       method: "post",
-      url: "http://localhost:8080/api/student/set-config",
+      url: "https://ml-search-mhwiw.ondigitalocean.app/api/student/set-config",
       headers: {
         "Content-Type": "application/json",
       },
