@@ -6,6 +6,7 @@ import ConfigurationLoader from "./configurationLoader";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Lobby from "./lobby";
 import { Layout, Menu, Breadcrumb } from "antd";
+import Home from "./home";
 
 const { Header, Content, Footer } = Layout;
 
@@ -20,14 +21,19 @@ function App() {
               <Link to="/">Home</Link>
             </Menu.Item>
             <Menu.Item>
+              <Link to="/configurator">Configurator</Link>
+            </Menu.Item>
+            <Menu.Item>
               <Link to="/lobby">Lobby</Link>
             </Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ padding: "0 50px", background: "#fff" }}>
+        <Content
+          style={{ padding: "0 50px", background: "#fff", minHeight: "500px" }}
+        >
           <Routes>
             <Route
-              path="/"
+              path="/configurator"
               element={
                 <div>
                   <ConfigurationLoader></ConfigurationLoader>
@@ -36,10 +42,11 @@ function App() {
               }
             ></Route>
             <Route path="/lobby" element={<Lobby></Lobby>}></Route>
+            <Route path="/" element={<Home></Home>}></Route>
           </Routes>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
+          All Rights Reserved @ Lucky Beetle Games
         </Footer>
       </Layout>
     </Router>

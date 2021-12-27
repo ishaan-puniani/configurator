@@ -1,9 +1,10 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Avatar, Button, List, Space } from "antd";
+import { Avatar, Button, List, Progress, Space } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { create } from "../storage";
 import { useNavigate } from "react-router-dom";
+import Loader from "../utils/Loader";
 
 declare global {
   interface Window {
@@ -23,7 +24,8 @@ const initConfig = {
 
 const Lobby = () => {
   const navigate = useNavigate();
-  const [games, setGames] = useState<Array<any>>([]);
+  const [games, setGames] = useState<Array<any>>();
+  const [loaderVisibility, setLoaderVisibility] = useState<boolean>(true);
   const [visibleGamePanel, setVisibleGamePanel] = useState<boolean>(false);
 
   const playGameInIframe = (configurationId: any) => {
@@ -36,7 +38,6 @@ const Lobby = () => {
       gameContainerId: "gamecontainer",
     };
     launchGame(iFrameLaunchConfig, (_iframeRef: any, error: any) => {
-      debugger;
       if (!error) {
         setVisibleGamePanel(true);
       } else {
@@ -58,6 +59,7 @@ const Lobby = () => {
     launchGame(popupLaunchConfig);
   };
   const onEditConfiguration = async (configurationId: string) => {
+    setLoaderVisibility(true);
     var config = {
       method: "get",
       url: `${initConfig.server}/api/get-config/${initConfig.operatorId}/${configurationId}`,
@@ -69,7 +71,7 @@ const Lobby = () => {
     const resp = await axios(config);
     if (resp.data && resp.data.configuration) {
       create(resp.data.configuration);
-      navigate("/", { replace: true });
+      navigate("/configurator", { replace: true });
     } else {
       alert("Some error occured");
     }
@@ -104,12 +106,12 @@ const Lobby = () => {
           style={{
             width: "960px",
             height: "540px",
-            // display: visibleGamePanel ? "" : "none",
+            display: visibleGamePanel ? "" : "none",
             margin: "auto",
           }}
         ></div>
       </div>
-      {games && (
+      {games && !loaderVisibility ? (
         <List
           itemLayout="horizontal"
           dataSource={games}
@@ -149,6 +151,12 @@ const Lobby = () => {
             </List.Item>
           )}
         />
+      ) : (
+        <Loader
+          onDone={() => {
+            setLoaderVisibility(false);
+          }}
+        ></Loader>
       )}
     </>
   );

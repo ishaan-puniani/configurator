@@ -18,7 +18,7 @@ const ConfigurationLoader = () => {
   };
   return (
     <>
-      <div>Hello</div>
+      <div>Samples</div>
       <Select
         style={{ width: "100%" }}
         onChange={(val: string) => setConfigId(val)}

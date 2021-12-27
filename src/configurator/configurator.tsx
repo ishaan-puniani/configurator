@@ -67,7 +67,7 @@ const Configurator = () => {
           ></PaytableForm>
         </TabPane>
         <TabPane tab="Upload To Server" key="publish" disabled={!data}>
-          <PublishForm></PublishForm>
+          <PublishForm data={data} handlePatch={handlePatch}></PublishForm>
         </TabPane>
       </Tabs>
     </>

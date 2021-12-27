@@ -78,6 +78,7 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
       ]}
     >
       <ReactTags
+        autofocus={false}
         tags={tags}
         suggestions={symbolsSuggestions}
         handleDelete={handleDelete}

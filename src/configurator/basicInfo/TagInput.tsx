@@ -95,6 +95,7 @@ const TagInput = ({
       // ]}
     >
       <ReactTags
+        autofocus={false}
         tags={tags}
         suggestions={symbolsSuggestions}
         handleDelete={handleDelete}

@@ -80,6 +80,7 @@ const Betline = ({ fieldPath, name, field, form }: any) => {
     >
       {/* <Input placeholder="multiplier" style={{ width: "60%" }} /> */}
       <ReactTags
+        autofocus={false}
         tags={tags}
         suggestions={suggestions}
         handleDelete={handleDelete}
