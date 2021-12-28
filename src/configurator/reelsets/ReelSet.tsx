@@ -1,5 +1,12 @@
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Form, Input, Button, InputNumber, Select } from "antd";
+import {
+  ClearOutlined,
+  CopyOutlined,
+  DeleteFilled,
+  DownloadOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { Form, Input, Button, InputNumber, Select, Space } from "antd";
 import { useState } from "react";
 import ReelStrip from "./ReelStrip";
 
@@ -9,12 +16,18 @@ const ReelSet = ({
   handleOnSave,
   numberOfReels,
   symbolsSuggestions,
+  onCopy,
+  copiedVals,
+  onPaste,
 }: {
   reelset: string;
   handleOnSave: any;
   values: any;
   numberOfReels: number;
-  symbolsSuggestions: Array<string>;
+  symbolsSuggestions: Array<{ id: string; text: string }>;
+  onCopy: any;
+  copiedVals: any;
+  onPaste: any;
 }) => {
   const [form] = Form.useForm();
 
@@ -44,6 +57,42 @@ const ReelSet = ({
             : [...new Array(numberOfReels)],
       }}
     >
+      <div style={{ textAlign: "right" }}>
+        <Space>
+          {!copiedVals && (
+            <Button
+              icon={<CopyOutlined />}
+              onClick={() => {
+                onCopy(form.getFieldsValue());
+              }}
+            >
+              Copy for other tabs
+            </Button>
+          )}
+          {copiedVals && (
+            <>
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={() => {
+                  handleOnSave(copiedVals);
+                  onPaste();
+                }}
+              >
+                Paste
+              </Button>
+              <Button
+                icon={<ClearOutlined />}
+                onClick={() => {
+                  handleOnSave(copiedVals);
+                  onPaste();
+                }}
+              >
+                Clear
+              </Button>
+            </>
+          )}
+        </Space>
+      </div>
       <h3>Fake Reels: {reelset}</h3>
       <Form.List
         name="fakereels"
@@ -67,6 +116,7 @@ const ReelSet = ({
                   label={`Strip:${field.key}`}
                   required={false}
                   key={field.key}
+                  shouldUpdate
                 >
                   <ReelStrip
                     symbolsSuggestions={symbolsSuggestions}

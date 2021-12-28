@@ -4,7 +4,6 @@ export const presetReelSets = ({
   connectedReels,
   availableLinkableReels,
 }: any): Array<string> => {
-  debugger;
   let reelSets: Array<string>;
   if (reelLinking === "static") {
     const _reelSets = [`linked_${connectedReels?.join("_")}`];

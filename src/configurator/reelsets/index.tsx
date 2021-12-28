@@ -9,10 +9,15 @@ import ReelStrip from "./ReelStrip";
 import { useCallback, useState } from "react";
 import ReelSet from "./ReelSet";
 import { presetReelSets } from "../../utilities/reelsLinking";
+import { parseClubbedSymbols } from "../../utilities/colossalSymbls";
+import Loader from "../../utils/Loader";
 const { TabPane } = Tabs;
 
 const ReelsetsForm = ({ data, path, handlePatch }: any) => {
-  const symbolsSuggestions = (data.symbols || []).map((sym: string) => ({
+  const symbolsSuggestions: Array<{
+    id: string;
+    text: string;
+  }> = [...data.symbols, ...parseClubbedSymbols(data)].map((sym: string) => ({
     id: sym,
     text: sym,
   }));
@@ -60,9 +65,13 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
     }
   };
   const handleOnSave = (reelset: string, formData: any) => {
+    debugger;
     const patch = { [path]: { ...data[path], [reelset]: formData } };
     handlePatch(patch);
   };
+  const [rsConfigForClone, setRsConfigForClone] = useState();
+  const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
+
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -78,20 +87,36 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
         hideAdd
         onChange={onChange}
         activeKey={activeKey}
-        type="editable-card"
-        onEdit={onEdit}
+        // type="editable-card"
+        // onEdit={onEdit}
       >
         {reelSets.map((pane) => (
           <TabPane tab={pane} key={pane}>
-            <ReelSet
-              reelset={pane}
-              symbolsSuggestions={symbolsSuggestions}
-              values={
-                data && data[path] && data[path][pane] ? data[path][pane] : {}
-              }
-              handleOnSave={(values: any) => handleOnSave(pane, values)}
-              numberOfReels={data.numberOfReels}
-            />
+            {!loaderVisibility ? (
+              <ReelSet
+                reelset={pane}
+                symbolsSuggestions={symbolsSuggestions}
+                values={
+                  data && data[path] && data[path][pane] ? data[path][pane] : {}
+                }
+                handleOnSave={(values: any) => handleOnSave(pane, values)}
+                numberOfReels={data.numberOfReels}
+                copiedVals={rsConfigForClone}
+                onPaste={() => {
+                  setRsConfigForClone(undefined);
+                  setLoaderVisibility(true);
+                }}
+                onCopy={(vals: any) => {
+                  setRsConfigForClone(vals);
+                }}
+              />
+            ) : (
+              <Loader
+                onDone={() => {
+                  setLoaderVisibility(false);
+                }}
+              ></Loader>
+            )}
           </TabPane>
         ))}
       </Tabs>

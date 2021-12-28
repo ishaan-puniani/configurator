@@ -95,6 +95,7 @@
 /* Styles for suggestions */
 .ReactTags__suggestions {
   position: absolute;
+  z-index: 999;
 }
 .ReactTags__suggestions ul {
   list-style-type: none;
