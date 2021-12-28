@@ -12,7 +12,6 @@ const TagInputForChild = ({
   rules,
   valueType,
 }: any) => {
-  debugger;
   const [tags, setTags] = useState<Array<Tag>>(
     form.getFieldValue([...fieldPath, field.name])
       ? form

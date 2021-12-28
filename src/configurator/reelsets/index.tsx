@@ -6,8 +6,9 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import ReelStrip from "./ReelStrip";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ReelSet from "./ReelSet";
+import { presetReelSets } from "../../utilities/reelsLinking";
 const { TabPane } = Tabs;
 
 const ReelsetsForm = ({ data, path, handlePatch }: any) => {
@@ -17,7 +18,14 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
   }));
   const [newReelsetName, setNewReelsetName] = useState("");
   const [reelSets, setReelSets] = useState<Array<string>>(
-    data && data[path] ? Object.keys(data[path]) : []
+    data && data[path]
+      ? [
+          ...presetReelSets(data),
+          ...Object.keys(data[path]).filter(
+            (k: string) => !presetReelSets(data).includes(k)
+          ),
+        ]
+      : [...presetReelSets(data)]
   );
   const [activeKey, setActiveKey] = useState("");
 

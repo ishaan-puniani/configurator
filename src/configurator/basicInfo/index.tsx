@@ -52,7 +52,7 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
           </p>
           <p>
             Please revist all other tabs to ensure that your update in
-            compatible/
+            compatible
           </p>
         </div>
       ),
