@@ -27,6 +27,7 @@ const Configurator = () => {
           <BasicInfoForm
             data={data}
             handleCreate={handleCreate}
+            handlePatch={handlePatch}
           ></BasicInfoForm>
         </TabPane>
         <TabPane tab="Reel Sets" key="reelsets" disabled={!data}>

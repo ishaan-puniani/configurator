@@ -1,5 +1,5 @@
 import { CloudUploadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal, Space } from "antd";
+import { Button, Form, Input, Modal, Select, Space } from "antd";
 import axios from "axios";
 import { useState } from "react";
 import { getData, patch } from "../../storage";
@@ -73,7 +73,20 @@ const PublishForm = ({ data, handlePatch }: any) => {
             >
               <Input.TextArea />
             </Form.Item>
-
+            <Form.Item
+              name={"gameLink"}
+              label="gameLink"
+              rules={[{ required: true, message: "Please input gameLink!" }]}
+            >
+              <Select>
+                <Select.Option value="http://localhost:4200">
+                  LocalHost:4200
+                </Select.Option>
+                <Select.Option value="https://goldenshinto-gameolive.web.app">
+                  Static Server
+                </Select.Option>
+              </Select>
+            </Form.Item>
             <Form.Item {...formItemLayoutWithOutLabel}>
               <Space direction="horizontal" size={"large"}>
                 <Button

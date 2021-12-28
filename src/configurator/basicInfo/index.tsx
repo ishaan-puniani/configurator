@@ -1,5 +1,9 @@
-import { Form, Input, Button, InputNumber, Select, Row } from "antd";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { Form, Input, Button, InputNumber, Select, Row, Modal } from "antd";
+import {
+  ExclamationCircleOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 import TagInput from "./TagInput";
 import TagInputForChild from "./TagInputForChild";
@@ -21,7 +25,7 @@ const formItemLayoutWithOutLabel = {
   },
 };
 
-const BasicInfoForm = ({ data, handleCreate }: any) => {
+const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
   const [winType, setWinType] = useState<string>(
     data ? data.wincalculator : ""
   );
@@ -29,15 +33,41 @@ const BasicInfoForm = ({ data, handleCreate }: any) => {
     data ? data.reelLinking : ""
   );
 
+  const [form] = Form.useForm();
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
     handleCreate(values);
   };
+  const patchExisting = () => {
+    Modal.confirm({
+      title: "Confirm",
+      icon: <ExclamationCircleOutlined />,
+      content: (
+        <div>
+          <h3>Are you sure you want to update?</h3>
+          <p>
+            Do note that this might be a breaking change for rest of the
+            configuration!
+          </p>
+          <p>
+            Please revist all other tabs to ensure that your update in
+            compatible/
+          </p>
+        </div>
+      ),
 
+      okText: "Confirm And Update",
+      cancelText: "Cancel",
+      onOk() {
+        const formValue = form.getFieldsValue();
+        handlePatch({ ...formValue });
+      },
+    });
+  };
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-  const [form] = Form.useForm();
   return (
     <Form
       form={form}
@@ -122,14 +152,14 @@ const BasicInfoForm = ({ data, handleCreate }: any) => {
       <TagInput
         name="scattersymbols"
         form={form}
-        label="symbols"
+        label="scattersymbols"
         rules={[{ required: true, message: "Please input symbols!" }]}
         help={"Subset of symbols"}
       ></TagInput>
       <TagInput
         name="wildsymbols"
         form={form}
-        label="symbols"
+        label="wildsymbols"
         rules={[{ required: true, message: "Please input symbols!" }]}
         help={"Subset of symbols"}
       ></TagInput>
@@ -243,8 +273,13 @@ const BasicInfoForm = ({ data, handleCreate }: any) => {
       )}
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          Submit
+          Create New
         </Button>
+        {data.configid && (
+          <Button type="default" onClick={patchExisting}>
+            Update
+          </Button>
+        )}
       </Form.Item>
     </Form>
   );
