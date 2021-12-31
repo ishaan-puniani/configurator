@@ -65,7 +65,6 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
     }
   };
   const handleOnSave = (reelset: string, formData: any) => {
-    debugger;
     const patch = { [path]: { ...data[path], [reelset]: formData } };
     handlePatch(patch);
   };

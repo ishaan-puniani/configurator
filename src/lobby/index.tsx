@@ -71,6 +71,7 @@ const Lobby = () => {
     const resp = await axios(config);
     if (resp.data && resp.data.configuration) {
       create(resp.data.configuration);
+      debugger;
       navigate("/configurator", { replace: true });
     } else {
       alert("Some error occured");

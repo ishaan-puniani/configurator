@@ -1,3 +1,5 @@
+// sym0,sym1,sym8,sym3,sym4,sym5,sym6,sym3,sym8,sym9,sym10,sym11
+// sym1,sym8,sym3
 const colossal = {
   betLines: [
     {

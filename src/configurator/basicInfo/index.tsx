@@ -87,13 +87,6 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
         <Input />
       </Form.Item>
       <Form.Item
-        label="name"
-        name="name"
-        rules={[{ required: true, message: "Please input name!" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
         label="numberOfReels"
         name="numberOfReels"
         rules={[{ required: true, message: "Please input numberOfReels!" }]}

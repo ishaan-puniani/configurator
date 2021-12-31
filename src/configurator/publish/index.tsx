@@ -67,6 +67,20 @@ const PublishForm = ({ data, handlePatch }: any) => {
             autoComplete="off"
           >
             <Form.Item
+              label="name"
+              name="name"
+              rules={[{ required: true, message: "Please input name!" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="description"
+              name="description"
+              rules={[{ required: true, message: "Please input remarks!" }]}
+            >
+              <Input.TextArea />
+            </Form.Item>
+            <Form.Item
               label="remark"
               name="remark"
               rules={[{ required: true, message: "Please input remarks!" }]}
