@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "static-gameolive"
+  },
+  "targets": {
+    "static-gameolive": {
+      "hosting": {
+        "configurator-gameolive": [
+          "configurator-gameolive"
+        ]
+      }
+    }
+  }
+}

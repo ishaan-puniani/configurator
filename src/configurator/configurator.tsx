@@ -2,8 +2,10 @@ import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { create, getData, patch } from "../storage";
 import BasicInfoForm from "./basicInfo";
+import BonusGameConfiguration from "./bonusGames";
 import GameModeAndReelSetMapper from "./gameModeAndReelSetMapper";
 import PaytableForm from "./paytable/PaytableForm";
+import PaytableContent from "./paytableContent";
 import PublishForm from "./publish";
 import ReelsetsForm from "./reelsets";
 import WinSituations from "./winSituations";
@@ -56,8 +58,12 @@ const Configurator = () => {
             handlePatch={handlePatch}
           ></WinSituations>
         </TabPane>
-        <TabPane tab="Special" key="special" disabled={!data}>
-          Pick and drop configuration will go here
+        <TabPane tab="BonusGame" key="bonusGame" disabled={!data}>
+          <BonusGameConfiguration
+            data={data}
+            path="bonusGameConfiguration"
+            handlePatch={handlePatch}
+          ></BonusGameConfiguration>
         </TabPane>
         <TabPane tab="Paytable" key="paytable" disabled={!data}>
           <PaytableForm
@@ -66,6 +72,13 @@ const Configurator = () => {
             symbols={data ? data.symbols : []}
             handlePatch={handlePatch}
           ></PaytableForm>
+        </TabPane>
+        <TabPane tab="PaytableContent" key="paytableContent" disabled={!data}>
+          <PaytableContent
+            data={data}
+            path="paytableContent"
+            handlePatch={handlePatch}
+          ></PaytableContent>
         </TabPane>
         <TabPane tab="Upload To Server" key="publish" disabled={!data}>
           <PublishForm data={data} handlePatch={handlePatch}></PublishForm>

@@ -3,7 +3,7 @@ import { Form, Input, Button, InputNumber, Select } from "antd";
 import { useState } from "react";
 import { Tag, WithContext as ReactTags } from "react-tag-input";
 
-const TagInputForChild = ({
+const TagInputForChildWithName = ({
   fieldPath,
   field,
   form,
@@ -11,11 +11,12 @@ const TagInputForChild = ({
   label,
   rules,
   valueType,
+  subName,
 }: any) => {
   const [tags, setTags] = useState<Array<Tag>>(
-    form.getFieldValue([...fieldPath, field.name])
+    form.getFieldValue([...fieldPath, field.name, subName])
       ? form
-          .getFieldValue([...fieldPath, field.name])
+          .getFieldValue([...fieldPath, field.name, subName])
           .map((tg: string, idx: number) => ({ id: "" + idx, text: tg }))
       : []
   );
@@ -25,7 +26,7 @@ const TagInputForChild = ({
     setTags(updatedTags);
     form.setFields([
       {
-        name: [...fieldPath, field.name],
+        name: [...fieldPath, field.name, subName],
         value: updatedTags.map((t) =>
           valueType === "integer" ? parseInt(t.text) : t.text
         ),
@@ -50,7 +51,7 @@ const TagInputForChild = ({
 
     form.setFields([
       {
-        name: [...fieldPath, field.name],
+        name: [...fieldPath, field.name, subName],
         value: newTags.map((t) =>
           valueType === "integer" ? parseInt(t.text) : t.text
         ),
@@ -72,10 +73,10 @@ const TagInputForChild = ({
   //   handleTagClick(index) {
   //     console.log('The tag at index ' + index + ' was clicked');
   //   }
-  console.log(field.name);
+
   return (
     <Form.Item
-      name={[...fieldPath, field.name]}
+      name={[...fieldPath, field.name, subName]}
       label={label}
       help="You can use , (comma) as separator for adding multiple values together and hit enter. Feel free to paste value as well"
       rules={rules}
@@ -105,4 +106,4 @@ const TagInputForChild = ({
   );
 };
 
-export default TagInputForChild;
+export default TagInputForChildWithName;

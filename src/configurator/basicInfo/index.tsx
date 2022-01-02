@@ -100,6 +100,7 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
       >
         <InputNumber />
       </Form.Item>
+
       <Form.Item
         name={"wincalculator"}
         label="wincalculator"
@@ -156,6 +157,16 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
         rules={[{ required: true, message: "Please input symbols!" }]}
         help={"Subset of symbols"}
       ></TagInput>
+      <Form.Item name={"bonusGame"} label="bonusGame">
+        <Select>
+          <Select.Option value="pickandchooseitems">
+            Pick and Choose Items
+          </Select.Option>
+          <Select.Option value="snakesandladders">
+            Sankes And Ladders
+          </Select.Option>
+        </Select>
+      </Form.Item>
       {/* <Form.Item
         name="dynamicReelLinking"
         valuePropName="checked"
@@ -268,7 +279,7 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
         <Button type="primary" htmlType="submit">
           Create New
         </Button>
-        {data.configid && (
+        {data?.configid && (
           <Button type="default" onClick={patchExisting}>
             Update
           </Button>
