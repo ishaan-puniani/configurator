@@ -60,7 +60,12 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
   //   handleTagClick(index) {
   //     console.log('The tag at index ' + index + ' was clicked');
   //   }
-
+  const copyToClipboard = () => {
+    try {
+      const val = form.getFieldValue([...fieldPath, field.name]);
+      navigator.clipboard.writeText(val.join(","));
+    } catch (ex) {}
+  };
   return (
     <Form.Item
       name={field.key}
@@ -86,6 +91,7 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
         // handleDrag={this.handleDrag}
         // handleTagClick={this.handleTagClick}
       />
+      <Button onClick={copyToClipboard}>Copy To Clipboard</Button>
     </Form.Item>
   );
 };
