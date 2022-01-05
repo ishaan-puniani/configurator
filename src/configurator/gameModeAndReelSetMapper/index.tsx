@@ -32,6 +32,7 @@ const GameModeAndReelSetMapper = ({ data, path, handlePatch }: any) => {
       initialValues={
         {
           [path]: data[path],
+          defaultReelset: data["defaultReelset"],
         }
         //       {
         // reelsetMapping: {
@@ -65,7 +66,19 @@ const GameModeAndReelSetMapper = ({ data, path, handlePatch }: any) => {
           </Select>
         </Form.Item>
       ))}
-
+      <Form.Item
+        name={"defaultReelset"}
+        label="defaultReelset"
+        rules={[{ required: true, message: "Please input defaultReelset!" }]}
+      >
+        <Select>
+          {Object.keys(data.availableReelsets || {}).map((reelset: string) => (
+            <Select.Option key={reelset} value={reelset}>
+              {reelset}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Submit

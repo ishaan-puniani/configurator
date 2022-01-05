@@ -86,8 +86,8 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
         hideAdd
         onChange={onChange}
         activeKey={activeKey}
-        // type="editable-card"
-        // onEdit={onEdit}
+        type="editable-card"
+        onEdit={onEdit}
       >
         {reelSets.map((pane) => (
           <TabPane tab={pane} key={pane}>

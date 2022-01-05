@@ -97,7 +97,16 @@ const PublishForm = ({ data, handlePatch }: any) => {
                   LocalHost:4200
                 </Select.Option>
                 <Select.Option value="https://goldenshinto-gameolive.web.app">
-                  Static Server
+                  Static Server: goldenshinto
+                </Select.Option>
+                <Select.Option value="https://snakesladders-gameolive.web.app">
+                  Static Server: snakesladders
+                </Select.Option>
+                <Select.Option value="https://farmland-gameolive.web.app/">
+                  Static Server: farmland
+                </Select.Option>
+                <Select.Option value="https://halloweens-gameolive.web.app">
+                  Static Server: halloweens
                 </Select.Option>
               </Select>
             </Form.Item>

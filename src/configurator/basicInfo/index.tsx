@@ -159,6 +159,7 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
       ></TagInput>
       <Form.Item name={"bonusGame"} label="bonusGame">
         <Select>
+          <Select.Option value="">None</Select.Option>
           <Select.Option value="pickandchooseitems">
             Pick and Choose Items
           </Select.Option>
