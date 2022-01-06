@@ -124,12 +124,10 @@ const PaytableForm = ({ data, path, symbols, handlePatch }: any) => {
                     <Input placeholder="type" style={{ width: "60%" }} />
                   </Form.Item>
 
-                  {fields.length > 1 ? (
-                    <MinusCircleOutlined
-                      className="dynamic-delete-button"
-                      onClick={() => remove(field.name)}
-                    />
-                  ) : null}
+                  <MinusCircleOutlined
+                    className="dynamic-delete-button"
+                    onClick={() => remove(field.name)}
+                  />
                 </Form.Item>
               ))}
               <Form.Item {...formItemLayoutWithOutLabel}>

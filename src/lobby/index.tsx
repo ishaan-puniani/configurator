@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { create } from "../storage";
 import { useNavigate } from "react-router-dom";
 import Loader from "../utils/Loader";
+import { GameStats } from "./gameStats";
 
 declare global {
   interface Window {
@@ -71,7 +72,6 @@ const Lobby = () => {
     const resp = await axios(config);
     if (resp.data && resp.data.configuration) {
       create(resp.data.configuration);
-      debugger;
       navigate("/configurator", { replace: true });
     } else {
       alert("Some error occured");
@@ -137,7 +137,7 @@ const Lobby = () => {
                 }
                 description={
                   <div>
-                    configurationId: <b>${item.configurationId}</b>{" "}
+                    configurationId: <b>{item.configurationId}</b>{" "}
                     <Button
                       type="primary"
                       size="small"
@@ -149,6 +149,7 @@ const Lobby = () => {
                   </div>
                 }
               />
+              <GameStats configId={item.configurationId}></GameStats>
             </List.Item>
           )}
         />

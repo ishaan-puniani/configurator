@@ -157,6 +157,30 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
         rules={[{ required: true, message: "Please input symbols!" }]}
         help={"Subset of symbols"}
       ></TagInput>
+      <Form.Item name={"wildBehaviour"} label="wildBehaviour">
+        <Select>
+          <Select.Option value="">None</Select.Option>
+          <Select.Option value="trigger-respin" disabled>
+            Trigger Respin
+          </Select.Option>
+          <Select.Option value="random-trigger-respin" disabled>
+            Random Wild and Respin
+          </Select.Option>
+          <Select.Option value="stick-and-trigger-respin" disabled>
+            Stick and Trigger Respin
+          </Select.Option>
+          <Select.Option value="walk-left-and-trigger-respin" disabled>
+            Walk to left and Trigger Respin
+          </Select.Option>
+        </Select>
+      </Form.Item>
+      <TagInput
+        name="burstingSymbols"
+        form={form}
+        label="burstingSymbols"
+        rules={[{ required: true, message: "Please input symbols!" }]}
+        help={"Subset of symbols"}
+      ></TagInput>
       <Form.Item name={"bonusGame"} label="bonusGame">
         <Select>
           <Select.Option value="">None</Select.Option>

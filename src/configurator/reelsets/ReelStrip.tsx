@@ -46,6 +46,24 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
     ]);
   };
 
+  const handleDrag = (tag: any, currPos: number, newPos: number) => {
+    const oldTags = [...tags];
+    const newTags = oldTags.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    setTags(newTags);
+    // this.setState({ tags: newTags });
+    form.setFields([
+      {
+        name: [...fieldPath, field.name],
+        value: newTags.map((t) => t.text),
+      },
+    ]);
+  };
+
   //   handleDrag(tag, currPos, newPos) {
   //     const tags = [...this.state.tags];
 
@@ -88,7 +106,7 @@ const ReelStrip = ({ fieldPath, field, form, symbolsSuggestions }: any) => {
         suggestions={symbolsSuggestions}
         handleDelete={handleDelete}
         handleAddition={handleAddition}
-        // handleDrag={this.handleDrag}
+        handleDrag={handleDrag}
         // handleTagClick={this.handleTagClick}
       />
       <Button onClick={copyToClipboard}>Copy To Clipboard</Button>

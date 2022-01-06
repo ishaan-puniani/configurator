@@ -73,6 +73,26 @@ const TagInput = ({
   //     console.log('The tag at index ' + index + ' was clicked');
   //   }
 
+  const handleDrag = (tag: any, currPos: number, newPos: number) => {
+    const oldTags = [...tags];
+    const newTags = oldTags.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    setTags(newTags);
+    // this.setState({ tags: newTags });
+    form.setFields([
+      {
+        name: [name],
+        value: newTags.map((t) =>
+          valueType === "integer" ? parseInt(t.text) : t.text
+        ),
+      },
+    ]);
+  };
+
   return (
     <Form.Item
       name={name}
@@ -100,7 +120,7 @@ const TagInput = ({
         suggestions={symbolsSuggestions}
         handleDelete={handleDelete}
         handleAddition={handleAddition}
-        // handleDrag={this.handleDrag}
+        handleDrag={handleDrag}
         // handleTagClick={this.handleTagClick}
       />
     </Form.Item>
