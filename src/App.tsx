@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Lobby from "./lobby";
 import { Layout, Menu, Breadcrumb } from "antd";
 import Home from "./home";
+import { RaceConfigurator } from "./raceConfigurator";
 
 const { Header, Content, Footer } = Layout;
 
@@ -22,6 +23,9 @@ function App() {
             </Menu.Item>
             <Menu.Item>
               <Link to="/configurator">Configurator</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/race-configurator">Race Configurator</Link>
             </Menu.Item>
             <Menu.Item>
               <Link to="/lobby">Lobby</Link>
@@ -40,6 +44,10 @@ function App() {
                   <Configurator></Configurator>
                 </div>
               }
+            ></Route>
+            <Route
+              path="/race-configurator"
+              element={<RaceConfigurator />}
             ></Route>
             <Route path="/lobby" element={<Lobby></Lobby>}></Route>
             <Route path="/" element={<Home></Home>}></Route>
