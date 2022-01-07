@@ -178,7 +178,6 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
         name="burstingSymbols"
         form={form}
         label="burstingSymbols"
-        rules={[{ required: true, message: "Please input symbols!" }]}
         help={"Subset of symbols"}
       ></TagInput>
       <Form.Item name={"bonusGame"} label="bonusGame">
