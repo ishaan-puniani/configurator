@@ -2,7 +2,7 @@ import { CloudUploadOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Select, Space } from "antd";
 import axios from "axios";
 import { useState } from "react";
-import { getData, patch } from "../../storage";
+import { getData, patch, SLOT_STORAGE_KEY } from "../../storage";
 import Loader from "../../utils/Loader";
 const formItemLayoutWithOutLabel = {
   wrapperCol: {
@@ -16,9 +16,9 @@ const PublishForm = ({ data, handlePatch }: any) => {
 
   const uploadToServer = async () => {
     setLoaderVisibility(true);
-    const configuration = getData();
+    const configuration = getData(SLOT_STORAGE_KEY);
     var data = JSON.stringify({
-      gameid: "slot-linked-server",
+      gameid: "race-server-base",
       ...configuration,
       configurator: "v0.0.1",
     });
@@ -96,17 +96,8 @@ const PublishForm = ({ data, handlePatch }: any) => {
                 <Select.Option value="http://localhost:4200">
                   LocalHost:4200
                 </Select.Option>
-                <Select.Option value="https://goldenshinto-gameolive.web.app">
-                  Static Server: goldenshinto
-                </Select.Option>
-                <Select.Option value="https://snakesladders-gameolive.web.app">
-                  Static Server: snakesladders
-                </Select.Option>
-                <Select.Option value="https://farmland-gameolive.web.app/">
-                  Static Server: farmland
-                </Select.Option>
-                <Select.Option value="https://halloweens-gameolive.web.app">
-                  Static Server: halloweens
+                <Select.Option value="https://horsebet-gameolive.web.app">
+                  Static Server: horsebet
                 </Select.Option>
               </Select>
             </Form.Item>

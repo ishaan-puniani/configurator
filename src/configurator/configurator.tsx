@@ -1,6 +1,6 @@
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
-import { create, getData, patch } from "../storage";
+import { create, getData, patch, SLOT_STORAGE_KEY } from "../storage";
 import BasicInfoForm from "./basicInfo";
 import BonusGameConfiguration from "./bonusGames";
 import GameModeAndReelSetMapper from "./gameModeAndReelSetMapper";
@@ -13,14 +13,14 @@ import WinSituations from "./winSituations";
 const { TabPane } = Tabs;
 
 const Configurator = () => {
-  const [data, setData] = useState<any>(getData());
+  const [data, setData] = useState<any>(getData(SLOT_STORAGE_KEY));
   const handleCreate = (formData: any) => {
-    create(formData);
-    setData(getData());
+    create(SLOT_STORAGE_KEY, formData);
+    setData(getData(SLOT_STORAGE_KEY));
   };
   const handlePatch = (formData: any) => {
-    patch(formData);
-    setData(getData());
+    patch(SLOT_STORAGE_KEY, formData);
+    setData(getData(SLOT_STORAGE_KEY));
   };
   return (
     <>

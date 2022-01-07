@@ -21,13 +21,13 @@ const formItemLayoutWithOutLabel = {
 };
 const PositionalOddsForm = ({
   data,
+  positionalData,
   path,
-  numberOfBetLines,
   handlePatch,
 }: any) => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    // handlePatch(values);
+    handlePatch(values);
     console.log("Received values of form:", values);
   };
   return (
@@ -37,7 +37,7 @@ const PositionalOddsForm = ({
       onFinish={onFinish}
       form={form}
       initialValues={{
-        [path]: data[path],
+        [path]: positionalData[path],
         // betlines: [
         //   {
         //     number: 0,
@@ -77,8 +77,26 @@ const PositionalOddsForm = ({
                   <Form.Item name={[field.name, "key"]}>
                     <Input placeholder="key" style={{ width: "60%" }} />
                   </Form.Item>
+                  <Form.Item name={[field.name, "title"]}>
+                    <Input placeholder="title" style={{ width: "60%" }} />
+                  </Form.Item>
+                  <Form.Item name={[field.name, "payouts"]}>
+                    {data.runnerIds.map((runner: string) => {
+                      return (
+                        <Form.Item
+                          name={[field.name, "payout", runner]}
+                          label={runner}
+                        >
+                          <Input
+                            placeholder={runner}
+                            style={{ width: "60%" }}
+                          />
+                        </Form.Item>
+                      );
+                    })}
+                  </Form.Item>
                   {/* <Form.Item name={[field.name, "payout"]}> */}
-                  <Form.List name={[field.name, "payouts"]}>
+                  {/* <Form.List name={[field.name, "payouts"]}>
                     {(
                       categoryPayoutFields,
                       { add: addCategoryPayout, remove: removeCategoryPayout },
@@ -119,7 +137,7 @@ const PositionalOddsForm = ({
                         </Form.Item>
                       </>
                     )}
-                  </Form.List>
+                  </Form.List> */}
                   {/* </Form.Item> */}
 
                   {/* <Form.Item name={[field.name, "number"]}>

@@ -13,7 +13,7 @@ const ConfigurationLoader = () => {
     // @ts-ignore
     const sampleConfig = sampleConfigs[configId];
     if (sampleConfig) {
-      create(sampleConfig);
+      //  create(sampleConfig);
     }
   };
   return (
@@ -26,7 +26,9 @@ const ConfigurationLoader = () => {
         <Select.Option value={"new"}>New</Select.Option>
         <Select.OptGroup label="Samples">
           {Object.keys(sampleConfigs).map((sample: string) => (
-            <Select.Option value={sample}>{sample}</Select.Option>
+            <Select.Option value={sample} disabled>
+              {sample}
+            </Select.Option>
           ))}
         </Select.OptGroup>
       </Select>

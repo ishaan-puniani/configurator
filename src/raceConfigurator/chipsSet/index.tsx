@@ -18,7 +18,7 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 20, offset: 4 },
   },
 };
-const ChipsSetForm = ({ data, path, numberOfBetLines, handlePatch }: any) => {
+const ChipsSetForm = ({ data, path, handlePatch }: any) => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
     handlePatch(values);
@@ -26,16 +26,16 @@ const ChipsSetForm = ({ data, path, numberOfBetLines, handlePatch }: any) => {
   };
   return (
     <Form
-      name="RunnersInformationForm"
+      name="ChipsetInformationForm"
       {...formItemLayoutWithOutLabel}
       onFinish={onFinish}
       form={form}
-      //   initialValues={{
-      //     [path]: data[path] || [],
-      //   }}
+      initialValues={{
+        [path]: data[path] || [],
+      }}
     >
       <>
-        <h3>Runners Information</h3>
+        <h3>Chips Information</h3>
         <Form.List
           name={[path]}
           rules={[
@@ -54,7 +54,7 @@ const ChipsSetForm = ({ data, path, numberOfBetLines, handlePatch }: any) => {
               {fields.map((field, index) => (
                 <Form.Item
                   {...formItemLayout}
-                  label={`Runner: ${index}:`}
+                  label={`Chip: ${index}:`}
                   required={false}
                   key={field.key}
                 >
@@ -82,7 +82,7 @@ const ChipsSetForm = ({ data, path, numberOfBetLines, handlePatch }: any) => {
                   style={{ width: "60%" }}
                   icon={<PlusOutlined />}
                 >
-                  Add Runner
+                  Add Chip
                 </Button>
                 <Form.ErrorList errors={errors} />
               </Form.Item>

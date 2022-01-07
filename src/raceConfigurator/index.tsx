@@ -1,6 +1,6 @@
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
-import { create, getData, patch } from "../storage";
+import { create, getData, patch, RACE_STORAGE_KEY } from "../storage";
 import { BasicInfo } from "./basicInfo";
 import ChipsSetForm from "./chipsSet";
 import { Odds } from "./odds";
@@ -12,14 +12,14 @@ import RunnersInformationForm from "./runners";
 const { TabPane } = Tabs;
 
 export const RaceConfigurator = () => {
-  const [data, setData] = useState<any>(getData());
+  const [data, setData] = useState<any>(getData(RACE_STORAGE_KEY));
   const handleCreate = (formData: any) => {
-    create(formData);
-    setData(getData());
+    create({ ...formData }, RACE_STORAGE_KEY);
+    setData(getData(RACE_STORAGE_KEY));
   };
   const handlePatch = (formData: any) => {
-    patch(formData);
-    setData(getData());
+    patch({ ...formData }, RACE_STORAGE_KEY);
+    setData(getData(RACE_STORAGE_KEY));
   };
   return (
     <div>
@@ -51,7 +51,6 @@ export const RaceConfigurator = () => {
           <ChipsSetForm
             data={data}
             path={"availableChips"}
-            handleCreate={handleCreate}
             handlePatch={handlePatch}
           ></ChipsSetForm>
         </TabPane>

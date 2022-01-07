@@ -2,7 +2,7 @@ import { CloudUploadOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Select, Space } from "antd";
 import axios from "axios";
 import { useState } from "react";
-import { getData, patch } from "../../storage";
+import { getData, patch, SLOT_STORAGE_KEY } from "../../storage";
 import Loader from "../../utils/Loader";
 const formItemLayoutWithOutLabel = {
   wrapperCol: {
@@ -16,7 +16,7 @@ const PublishForm = ({ data, handlePatch }: any) => {
 
   const uploadToServer = async () => {
     setLoaderVisibility(true);
-    const configuration = getData();
+    const configuration = getData(SLOT_STORAGE_KEY);
     var data = JSON.stringify({
       gameid: "slot-linked-server",
       ...configuration,

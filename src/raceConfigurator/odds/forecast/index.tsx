@@ -18,30 +18,26 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 20, offset: 4 },
   },
 };
-const ForecastOddsForm = ({
-  data,
-  path,
-  numberOfBetLines,
-  handlePatch,
-}: any) => {
+const ForecastOddsForm = ({ data, path, forecastData, handlePatch }: any) => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
     handlePatch(values);
     console.log("Received values of form:", values);
   };
-  debugger;
 
-  if (!data[path]) {
-    data[path] = [];
+  if (!forecastData[path]) {
+    forecastData[path] = [];
   }
-  if (data[path]) {
+  if (forecastData[path]) {
     data.runnerIds.forEach((runnerId: string, idx: number) => {
       data.runnerIds.forEach((jRunnerId: string, jIdx: number) => {
-        if (runnerId !== jRunnerId) {
-          data[path].push({
+        const key = `${runnerId}__${jRunnerId}`;
+        const payout = forecastData[path].find((pp: any) => pp.key === key);
+        if (runnerId !== jRunnerId && !payout) {
+          forecastData[path].push({
             first: runnerId,
             second: jRunnerId,
-            key: `${runnerId}_${jRunnerId}`,
+            key: `${runnerId}__${jRunnerId}`,
           });
         }
       });
@@ -61,7 +57,7 @@ const ForecastOddsForm = ({
       onFinish={onFinish}
       form={form}
       initialValues={{
-        [path]: data[path],
+        [path]: forecastData[path],
         // betlines: [
         //   {
         //     number: 0,
@@ -134,13 +130,13 @@ const ForecastOddsForm = ({
                     />
                   </Form.Item> */}
 
-                  <MinusCircleOutlined
+                  {/* <MinusCircleOutlined
                     className="dynamic-delete-button"
                     onClick={() => remove(field.name)}
-                  />
+                  /> */}
                 </Form.Item>
               ))}
-              <Form.Item>
+              {/* <Form.Item>
                 <Button
                   type="dashed"
                   onClick={() => add()}
@@ -150,7 +146,7 @@ const ForecastOddsForm = ({
                   Add BetLine
                 </Button>
                 <Form.ErrorList errors={errors} />
-              </Form.Item>
+              </Form.Item> */}
             </>
           )}
         </Form.List>

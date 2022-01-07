@@ -2,7 +2,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { Avatar, Button, List, Progress, Space } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { create } from "../storage";
+import { create, RACE_STORAGE_KEY, SLOT_STORAGE_KEY } from "../storage";
 import { useNavigate } from "react-router-dom";
 import Loader from "../utils/Loader";
 import { GameStats } from "./gameStats";
@@ -71,8 +71,14 @@ const Lobby = () => {
     //@ts-ignore
     const resp = await axios(config);
     if (resp.data && resp.data.configuration) {
-      create(resp.data.configuration);
-      navigate("/configurator", { replace: true });
+      if (resp.data.configuration.gameid === "race-server-base") {
+        create(RACE_STORAGE_KEY, resp.data.configuration);
+        navigate("/race-configurator");
+      }
+      if (resp.data.configuration.gameid === "slot-linked-server") {
+        create(SLOT_STORAGE_KEY, resp.data.configuration);
+        navigate("/configurator");
+      }
     } else {
       alert("Some error occured");
     }

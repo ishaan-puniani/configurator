@@ -1,14 +1,15 @@
-let STORAGE_KEY = "DUMMY_CONFIG";
-export const create = (basicInfo: any) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(basicInfo));
+export const RACE_STORAGE_KEY = "RACE_STORAGE_KEY";
+export const SLOT_STORAGE_KEY = "SLOT_STORAGE_KEY";
+export const create = (key: string, basicInfo: any) => {
+  localStorage.setItem(key, JSON.stringify(basicInfo));
 };
 
-export const patch = (fields: any) => {
-  const patched = { ...getData(), ...fields };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(patched));
+export const patch = (key: string, fields: any) => {
+  const patched = { ...getData(key), ...fields };
+  localStorage.setItem(SLOT_STORAGE_KEY, JSON.stringify(patched));
 };
 
-export const getData = (): any => {
-  const retrievedObject: any = localStorage.getItem(STORAGE_KEY);
+export const getData = (key: string): any => {
+  const retrievedObject: any = localStorage.getItem(key);
   return JSON.parse(retrievedObject);
 };
