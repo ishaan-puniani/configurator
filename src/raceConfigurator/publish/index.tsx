@@ -2,7 +2,7 @@ import { CloudUploadOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Select, Space } from "antd";
 import axios from "axios";
 import { useState } from "react";
-import { getData, patch, RACE_STORAGE_KEY, SLOT_STORAGE_KEY } from "../../storage";
+import { getData, RACE_STORAGE_KEY } from "../../storage";
 import Loader from "../../utils/Loader";
 const formItemLayoutWithOutLabel = {
   wrapperCol: {
@@ -17,7 +17,6 @@ const PublishForm = ({ data, handlePatch }: any) => {
   const uploadToServer = async () => {
     setLoaderVisibility(true);
     const configuration = getData(RACE_STORAGE_KEY);
-    debugger;
     var data = JSON.stringify({
       gameid: "race-server-base",
       ...configuration,
@@ -25,7 +24,7 @@ const PublishForm = ({ data, handlePatch }: any) => {
     });
     var config = {
       method: "post",
-      url: "http://localhost:8080/api/student/set-config",
+      url: "https://ml-search-mhwiw.ondigitalocean.app/api/student/set-config",
       headers: {
         "Content-Type": "application/json",
       },
@@ -37,7 +36,6 @@ const PublishForm = ({ data, handlePatch }: any) => {
   };
   const cloneConfiguration = () => {
     const formValue = form.getFieldsValue();
-    debugger;
     handlePatch({ ...formValue, configid: undefined });
     uploadToServer();
   };
