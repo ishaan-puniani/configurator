@@ -6,7 +6,7 @@ export const create = (key: string, basicInfo: any) => {
 
 export const patch = (key: string, fields: any) => {
   const patched = { ...getData(key), ...fields };
-  localStorage.setItem(SLOT_STORAGE_KEY, JSON.stringify(patched));
+  localStorage.setItem(key, JSON.stringify(patched));
 };
 
 export const getData = (key: string): any => {

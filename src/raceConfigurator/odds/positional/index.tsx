@@ -84,10 +84,10 @@ const PositionalOddsForm = ({
                     {data.runnerIds.map((runner: string) => {
                       return (
                         <Form.Item
-                          name={[field.name, "payout", runner]}
+                          name={[field.name, "payouts", runner]}
                           label={runner}
                         >
-                          <Input
+                          <InputNumber
                             placeholder={runner}
                             style={{ width: "60%" }}
                           />

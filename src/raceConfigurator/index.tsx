@@ -14,11 +14,11 @@ const { TabPane } = Tabs;
 export const RaceConfigurator = () => {
   const [data, setData] = useState<any>(getData(RACE_STORAGE_KEY));
   const handleCreate = (formData: any) => {
-    create({ ...formData }, RACE_STORAGE_KEY);
+    create(RACE_STORAGE_KEY, { ...formData });
     setData(getData(RACE_STORAGE_KEY));
   };
   const handlePatch = (formData: any) => {
-    patch({ ...formData }, RACE_STORAGE_KEY);
+    patch(RACE_STORAGE_KEY, { ...formData });
     setData(getData(RACE_STORAGE_KEY));
   };
   return (
