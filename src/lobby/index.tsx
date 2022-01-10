@@ -1,5 +1,14 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Avatar, Button, List, Progress, Space } from "antd";
+import {
+  Alert,
+  Avatar,
+  BackTop,
+  Button,
+  Input,
+  List,
+  Progress,
+  Space,
+} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { create, RACE_STORAGE_KEY, SLOT_STORAGE_KEY } from "../storage";
@@ -22,9 +31,12 @@ const initConfig = {
   clientSecret: "abc1602832965454",
   operatorId: "5f8ae3cbc34272000af1f3bf",
 };
-
+const tempUser = `testuser${Date.now()}`;
 const Lobby = () => {
+  const storedPID = window.localStorage.getItem("playerId");
   const navigate = useNavigate();
+  const [playerId, setPlayerId] = useState<string | null>(storedPID);
+  const [txtPlayerId, setTxtPlayerId] = useState<string>(tempUser);
   const [games, setGames] = useState<Array<any>>();
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(true);
   const [visibleGamePanel, setVisibleGamePanel] = useState<boolean>(false);
@@ -34,7 +46,7 @@ const Lobby = () => {
       operatorId: initConfig.operatorId,
       configId: configurationId,
       server: initConfig.server,
-      playerId: "test1234",
+      playerId: playerId,
       launchType: "iframe",
       gameContainerId: "gamecontainer",
     };
@@ -51,7 +63,7 @@ const Lobby = () => {
       operatorId: initConfig.operatorId,
       configId: configurationId,
       server: initConfig.server,
-      playerId: "test1234",
+      playerId: playerId,
       launchType: "popup",
       name: "",
       specs: "width=960,height=540",
@@ -105,8 +117,56 @@ const Lobby = () => {
 
     fetchGames();
   }, []);
+
   return (
     <>
+      {storedPID && (
+        <Alert
+          message={`You are playing as: ${playerId}`}
+          type="info"
+          action={
+            <Button
+              size="small"
+              onClick={() => {
+                window.localStorage.removeItem("playerId");
+                setPlayerId(null);
+              }}
+            >
+              Logout
+            </Button>
+          }
+        ></Alert>
+      )}
+      {!storedPID && (
+        <div
+          style={{
+            textAlign: "right",
+            background: "#e6f7ff",
+          }}
+        >
+          <Space align="end" style={{ margin: "10px" }}>
+            <Input
+              onChange={(e: any) => {
+                console.log(e.target.value);
+                setTxtPlayerId(e.target.value);
+              }}
+            />
+
+            <Button
+              onClick={() => {
+                if (txtPlayerId.length > 4) {
+                  window.localStorage.setItem("playerId", txtPlayerId);
+                  setPlayerId(txtPlayerId);
+                } else {
+                  alert("Length of player id should be more than 5");
+                }
+              }}
+            >
+              Login as user
+            </Button>
+          </Space>
+        </div>
+      )}
       <div style={{ textAlign: "center" }}>
         <div
           id="gamecontainer"
@@ -166,6 +226,7 @@ const Lobby = () => {
           }}
         ></Loader>
       )}
+      <BackTop></BackTop>
     </>
   );
 };

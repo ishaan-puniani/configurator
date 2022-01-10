@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { Tabs, notification } from "antd";
 import { useEffect, useState } from "react";
 import { create, getData, patch, SLOT_STORAGE_KEY } from "../storage";
 import BasicInfoForm from "./basicInfo";
@@ -10,6 +10,13 @@ import PublishForm from "./publish";
 import ReelsetsForm from "./reelsets";
 import WinSituations from "./winSituations";
 
+const openNotification = (message: string | undefined) => {
+  notification.info({
+    message: message || "Configuration Updated",
+    placement: "bottomLeft",
+  });
+};
+
 const { TabPane } = Tabs;
 
 const Configurator = () => {
@@ -17,10 +24,12 @@ const Configurator = () => {
   const handleCreate = (formData: any) => {
     create(SLOT_STORAGE_KEY, formData);
     setData(getData(SLOT_STORAGE_KEY));
+    openNotification("Configuration Created");
   };
   const handlePatch = (formData: any) => {
     patch(SLOT_STORAGE_KEY, formData);
     setData(getData(SLOT_STORAGE_KEY));
+    openNotification("Configuration Updated");
   };
   return (
     <>
