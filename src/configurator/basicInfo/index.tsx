@@ -174,12 +174,14 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
           </Select.Option>
         </Select>
       </Form.Item>
+
       <TagInput
-        name="burstingSymbols"
+        name="burstableSymbols"
         form={form}
-        label="burstingSymbols"
+        label="burstableSymbols"
         help={"Subset of symbols"}
       ></TagInput>
+
       <Form.Item name={"bonusGame"} label="bonusGame">
         <Select>
           <Select.Option value="">None</Select.Option>

@@ -87,7 +87,10 @@ const Lobby = () => {
         create(RACE_STORAGE_KEY, resp.data.configuration);
         navigate("/race-configurator");
       }
-      if (resp.data.configuration.gameid === "slot-linked-server") {
+      if (
+        resp.data.configuration.gameid === "slot-linked-server" ||
+        resp.data.configuration.gameid === "avalance-slot-server-base"
+      ) {
         create(SLOT_STORAGE_KEY, resp.data.configuration);
         navigate("/configurator");
       }

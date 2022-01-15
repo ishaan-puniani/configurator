@@ -18,7 +18,7 @@ const PublishForm = ({ data, handlePatch }: any) => {
     setLoaderVisibility(true);
     const configuration = getData(SLOT_STORAGE_KEY);
     var data = JSON.stringify({
-      gameid: "slot-linked-server",
+      // gameid: "slot-linked-server",
       ...configuration,
       configurator: "v0.0.1",
     });
@@ -61,11 +61,25 @@ const PublishForm = ({ data, handlePatch }: any) => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={data}
+            initialValues={{ gameid: "slot-linked-server", ...data }}
             onFinish={onFinish}
             //  onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
+            <Form.Item
+              name={"gameid"}
+              label="gameid"
+              rules={[{ required: true, message: "Please input gameid!" }]}
+            >
+              <Select>
+                <Select.Option value="slot-linked-server">
+                  Spining Mechanism
+                </Select.Option>
+                <Select.Option value="avalance-slot-server-base">
+                  Freefall Mechanism
+                </Select.Option>
+              </Select>
+            </Form.Item>
             <Form.Item
               label="name"
               name="name"
