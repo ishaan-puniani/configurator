@@ -101,6 +101,7 @@ const PublishForm = ({ data, handlePatch }: any) => {
             >
               <Input.TextArea />
             </Form.Item>
+
             <Form.Item
               name={"gameLink"}
               label="gameLink"
@@ -122,6 +123,22 @@ const PublishForm = ({ data, handlePatch }: any) => {
                 <Select.Option value="https://halloweens-gameolive.web.app">
                   Static Server: halloweens
                 </Select.Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name={"status"}
+              label="status"
+              rules={[{ required: true, message: "Please input status!" }]}
+            >
+              <Select>
+                <Select.Option value="development">
+                  In Development
+                </Select.Option>
+                <Select.Option value="inactive">Inactive</Select.Option>
+                <Select.Option value="bugbash">Bug Bash</Select.Option>
+                <Select.Option value="preview">Preview</Select.Option>
+                <Select.Option value="released">Released</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item {...formItemLayoutWithOutLabel}>

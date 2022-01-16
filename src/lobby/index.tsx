@@ -8,6 +8,7 @@ import {
   List,
   Progress,
   Space,
+  Tabs,
 } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -15,6 +16,8 @@ import { create, RACE_STORAGE_KEY, SLOT_STORAGE_KEY } from "../storage";
 import { useNavigate } from "react-router-dom";
 import Loader from "../utils/Loader";
 import { GameStats } from "./gameStats";
+
+const { TabPane } = Tabs;
 
 declare global {
   interface Window {
@@ -120,7 +123,52 @@ const Lobby = () => {
 
     fetchGames();
   }, []);
-
+  const renderGamesList = (filter: string) => {
+    return (
+      <List
+        itemLayout="horizontal"
+        dataSource={games?.filter((g) =>
+          filter === "development"
+            ? g?.configuration?.status === filter || !g?.configuration?.status
+            : g?.configuration?.status === filter
+        )}
+        renderItem={(item: any) => (
+          <List.Item
+            actions={[
+              <Button onClick={() => playGameInIframe(item?.configurationId)}>
+                Play
+              </Button>,
+              // <Button onClick={() => playGameInIframe(item.configurationId)}>
+              //   Play
+              // </Button>,
+              <Button onClick={() => playGameInPopup(item?.configurationId)}>
+                Open Popup
+              </Button>,
+            ]}
+          >
+            <List.Item.Meta
+              // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              title={<a href="">{item?.configuration?.name}</a>}
+              description={
+                <div>
+                  configurationId: <b>{item?.configurationId}</b>{" "}
+                  <Button
+                    type="primary"
+                    size="small"
+                    icon={<EditOutlined />}
+                    onClick={() => onEditConfiguration(item?.configurationId)}
+                  >
+                    Edit
+                  </Button>
+                </div>
+              }
+            />
+            <GameStats configId={item?.configurationId}></GameStats>
+          </List.Item>
+        )}
+      />
+    );
+  };
   return (
     <>
       {storedPID && (
@@ -182,46 +230,20 @@ const Lobby = () => {
         ></div>
       </div>
       {games && !loaderVisibility ? (
-        <List
-          itemLayout="horizontal"
-          dataSource={games}
-          renderItem={(item: any) => (
-            <List.Item
-              actions={[
-                <Button onClick={() => playGameInIframe(item.configurationId)}>
-                  Play
-                </Button>,
-                // <Button onClick={() => playGameInIframe(item.configurationId)}>
-                //   Play
-                // </Button>,
-                <Button onClick={() => playGameInPopup(item.configurationId)}>
-                  Open Popup
-                </Button>,
-              ]}
-            >
-              <List.Item.Meta
-                // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title={
-                  <a href="https://ant.design">{item.configuration.name}</a>
-                }
-                description={
-                  <div>
-                    configurationId: <b>{item.configurationId}</b>{" "}
-                    <Button
-                      type="primary"
-                      size="small"
-                      icon={<EditOutlined />}
-                      onClick={() => onEditConfiguration(item.configurationId)}
-                    >
-                      Edit
-                    </Button>
-                  </div>
-                }
-              />
-              <GameStats configId={item.configurationId}></GameStats>
-            </List.Item>
-          )}
-        />
+        <Tabs defaultActiveKey="1" size={"middle"} style={{ marginBottom: 32 }}>
+          <TabPane tab="In Development" key="development">
+            {renderGamesList("development")}
+          </TabPane>
+          <TabPane tab="Bug Bash" key="bugbash">
+            {renderGamesList("bugbash")}
+          </TabPane>
+          <TabPane tab="Preview" key="preview">
+            {renderGamesList("preview")}
+          </TabPane>
+          <TabPane tab="Released" key="released">
+            {renderGamesList("released")}
+          </TabPane>
+        </Tabs>
       ) : (
         <Loader
           onDone={() => {
