@@ -189,7 +189,7 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
             Pick and Choose Items
           </Select.Option>
           <Select.Option value="snakesandladders">
-            Sankes And Ladders
+            Snakes And Ladders
           </Select.Option>
         </Select>
       </Form.Item>
