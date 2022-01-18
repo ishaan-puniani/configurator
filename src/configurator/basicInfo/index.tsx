@@ -160,7 +160,7 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
       <Form.Item name={"wildBehaviour"} label="wildBehaviour">
         <Select>
           <Select.Option value="">None</Select.Option>
-          <Select.Option value="trigger-respin" disabled>
+          <Select.Option value="trigger-respin">
             Trigger Respin
           </Select.Option>
           <Select.Option value="random-trigger-respin" disabled>
@@ -171,6 +171,9 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
           </Select.Option>
           <Select.Option value="walk-left-and-trigger-respin" disabled>
             Walk to left and Trigger Respin
+          </Select.Option>
+          <Select.Option value="expand-trigger-respin" disabled>
+            Expand Wild and Respin
           </Select.Option>
         </Select>
       </Form.Item>
