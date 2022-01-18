@@ -20,9 +20,13 @@ const formItemLayoutWithOutLabel = {
 };
 const PaytableContent = ({ data, path, handlePatch }: any) => {
   const [form] = Form.useForm();
+
   const onFinish = (values: any) => {
-    handlePatch(values);
+    handlePatch({
+      [path]: [values.description, ...values[path]],
+    });
   };
+
   return (
     <Form
       name="paytableContanet_form"
@@ -31,9 +35,34 @@ const PaytableContent = ({ data, path, handlePatch }: any) => {
       form={form}
       initialValues={{
         [path]: data[path] || [],
+        description: { identifier: "description", sortOrder: 0 },
       }}
     >
       <>
+        <Form.Item {...formItemLayout} label={`Description:`} required={false}>
+          <Form.Item name={["description", "identifier"]}>
+            <Input placeholder="Identifier" style={{ width: "60%" }} disabled />
+          </Form.Item>
+          <Form.Item name={["description", "sortOrder"]}>
+            <InputNumber
+              placeholder="Sort Order"
+              style={{ width: "60%" }}
+              disabled
+            />
+          </Form.Item>
+          <Form.Item name={["description", "title"]}>
+            <Input placeholder="Title" style={{ width: "60%" }} />
+          </Form.Item>
+          <Form.Item name={["description", "content"]}>
+            <Input.TextArea placeholder="Content" style={{ width: "60%" }} />
+          </Form.Item>
+          <Form.Item name={["description", "image"]}>
+            <Input
+              placeholder="image name like sym3x3.png"
+              style={{ width: "60%" }}
+            />
+          </Form.Item>
+        </Form.Item>
         <h3>Add Sections After Symbols Payout Grid</h3>
         <Form.List
           name={[path]}
@@ -59,6 +88,12 @@ const PaytableContent = ({ data, path, handlePatch }: any) => {
                 >
                   <Form.Item name={[field.name, "identifier"]}>
                     <Input placeholder="Identifier" style={{ width: "60%" }} />
+                  </Form.Item>
+                  <Form.Item name={[field.name, "sortOrder"]}>
+                    <InputNumber
+                      placeholder="Sort Order"
+                      style={{ width: "60%" }}
+                    />
                   </Form.Item>
                   <Form.Item name={[field.name, "title"]}>
                     <Input placeholder="Title" style={{ width: "60%" }} />
