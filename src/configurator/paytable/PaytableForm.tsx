@@ -111,6 +111,21 @@ const PaytableForm = ({ data, path, symbols, handlePatch }: any) => {
                     />
                   </Form.Item>
                   <Form.Item
+                    name={[field.name, "sortOrder"]}
+                    // key={[field.key, "number"]}
+                    help={
+                      <>
+                        This order in for visual sorting only and does not
+                        priortise/impact any payout mechanism in the game
+                      </>
+                    }
+                  >
+                    <InputNumber
+                      placeholder="Display Sort Order used in Game Paytable"
+                      style={{ width: "60%" }}
+                    />
+                  </Form.Item>
+                  <Form.Item
                     name={[field.name, "type"]}
                     // key={[field.key, "number"]}
                     noStyle
