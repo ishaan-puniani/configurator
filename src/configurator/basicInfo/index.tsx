@@ -160,9 +160,7 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
       <Form.Item name={"wildBehaviour"} label="wildBehaviour">
         <Select>
           <Select.Option value="">None</Select.Option>
-          <Select.Option value="trigger-respin">
-            Trigger Respin
-          </Select.Option>
+          <Select.Option value="trigger-respin">Trigger Respin</Select.Option>
           <Select.Option value="random-trigger-respin" disabled>
             Random Wild and Respin
           </Select.Option>
@@ -184,6 +182,30 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
         label="burstableSymbols"
         help={"Subset of symbols"}
       ></TagInput>
+
+      <Form.Item name={"reelsAdjustmentMode"} label="reelsAdjustmentMode">
+        <Select>
+          <Select.Option value="">None</Select.Option>
+          <Select.Option value="burst-move-down-symbol-by-symbol">
+            Burst And Move Downward
+          </Select.Option>
+          <Select.Option value="burst-move-up-symbol-by-symbol">
+            Burst And Move Upward
+          </Select.Option>
+          <Select.Option value="burst-move-symbol-by-symbol-to-maximize-colossal">
+            Burst And Move To Maximize Colossal
+          </Select.Option>
+          <Select.Option value="burst-move-down-all" disabled>
+            Burst And Move Downward
+          </Select.Option>
+          <Select.Option value="burst-move-up-all" disabled>
+            Burst And Move Upward
+          </Select.Option>
+          <Select.Option value="burst-move-all-to-maximize-colossal" disabled>
+            Burst And Move To Maximize Colossal
+          </Select.Option>
+        </Select>
+      </Form.Item>
 
       <Form.Item name={"bonusGame"} label="bonusGame">
         <Select>
