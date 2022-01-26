@@ -8,6 +8,7 @@ import PaytableForm from "./paytable/PaytableForm";
 import PaytableContent from "./paytableContent";
 import PublishForm from "./publish";
 import ReelsetsForm from "./reelsets";
+import { WinExcitements } from "./winExcitements";
 import WinSituations from "./winSituations";
 
 const openNotification = (message: string | undefined) => {
@@ -66,6 +67,13 @@ const Configurator = () => {
             numberOfBetLines={data ? data.numberOfBetLines : 0}
             handlePatch={handlePatch}
           ></WinSituations>
+        </TabPane>
+        <TabPane tab="Win Excitements" key="winExcitements" disabled={!data}>
+          <WinExcitements
+            data={data}
+            path={"winExcitements"}
+            handlePatch={handlePatch}
+          ></WinExcitements>
         </TabPane>
         <TabPane tab="BonusGame" key="bonusGame" disabled={!data}>
           <BonusGameConfiguration
