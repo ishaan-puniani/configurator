@@ -89,7 +89,7 @@ const WinSituations = ({ data, path, numberOfBetLines, handlePatch }: any) => {
                     />
                   </Form.Item>
                 ))}
-                <Form.Item>
+                {/* <Form.Item>
                   <Button
                     type="dashed"
                     onClick={() => add()}
@@ -99,7 +99,7 @@ const WinSituations = ({ data, path, numberOfBetLines, handlePatch }: any) => {
                     Add BetLine
                   </Button>
                   <Form.ErrorList errors={errors} />
-                </Form.Item>
+                </Form.Item> */}
               </>
             )}
           </Form.List>
