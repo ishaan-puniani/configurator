@@ -124,9 +124,9 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
       )}
 
       <TagInput
-        name="symbols"
+        name="availableSymbols"
         form={form}
-        label="symbols"
+        label="Available Symbols"
         rules={[{ required: true, message: "Please input symbols!" }]}
         help={
           "All symbols including wild and scatter eg: sym0,sym1,sym3,sym4,sym5,sym6,sym7,sym8,sym9,sym10"

@@ -17,10 +17,12 @@ const ReelsetsForm = ({ data, path, handlePatch }: any) => {
   const symbolsSuggestions: Array<{
     id: string;
     text: string;
-  }> = [...data.symbols, ...parseClubbedSymbols(data)].map((sym: string) => ({
-    id: sym,
-    text: sym,
-  }));
+  }> = [...data.availableSymbols, ...parseClubbedSymbols(data)].map(
+    (sym: string) => ({
+      id: sym,
+      text: sym,
+    })
+  );
   const [newReelsetName, setNewReelsetName] = useState("");
   const [reelSets, setReelSets] = useState<Array<string>>(
     data && data[path]

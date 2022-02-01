@@ -86,7 +86,7 @@ const Configurator = () => {
           <PaytableForm
             data={data}
             path="paytableObj"
-            symbols={data ? data.symbols : []}
+            symbols={data ? data.availableSymbols : []}
             handlePatch={handlePatch}
           ></PaytableForm>
         </TabPane>

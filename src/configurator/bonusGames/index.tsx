@@ -25,7 +25,7 @@ const BonusGameConfiguration = ({ data, path, handlePatch }: any) => {
   const symbolsSuggestions: Array<{
     id: string;
     text: string;
-  }> = [...data.symbols, ...parseClubbedSymbols(data)].map((sym: string) => ({
+  }> = [...data.availableSymbols, ...parseClubbedSymbols(data)].map((sym: string) => ({
     id: sym,
     text: sym,
   }));
