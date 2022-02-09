@@ -69,9 +69,7 @@ export const BasicInfo = ({ data, handleCreate, handlePatch }: any) => {
       >
         <Select>
           <Select.Option value="horse">Horse</Select.Option>
-          <Select.Option value="greyhound" disabled>
-            Greyhound
-          </Select.Option>
+          <Select.Option value="greyhound">Greyhound</Select.Option>
           <Select.Option value="athelete" disabled>
             Athelete
           </Select.Option>
