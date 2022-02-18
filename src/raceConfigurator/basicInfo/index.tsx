@@ -31,25 +31,25 @@ export const BasicInfo = ({ data, handleCreate, handlePatch }: any) => {
       cancelText: "Cancel",
       onOk() {
         const formValue = form.getFieldsValue();
+        // debugger;
+        // const runnerIds = [];
+        // for (var idx = 0; idx < formValue.numberOfRunners; idx++) {
+        //   runnerIds.push({ id: `runner_${idx + 1}` });
+        // }
 
-        const runnerIds = [];
-        for (var idx = 0; idx < formValue.numberOfRunners; idx++) {
-          runnerIds.push({ id: `runner_${idx + 1}` });
-        }
-
-        handlePatch({ ...formValue, runnerIds });
+        handlePatch({ ...formValue });
       },
     });
   };
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    const runnerIds = [];
-    debugger;
-    for (var idx = 0; idx < values.numberOfRunners; idx++) {
-      runnerIds.push(`runner_${idx + 1}`);
-    }
-    handleCreate({ ...values, runnerIds });
+    // const runnerIds = [];
+    // debugger;
+    // for (var idx = 0; idx < values.numberOfRunners; idx++) {
+    //   runnerIds.push(`runner_${idx + 1}`);
+    // }
+    handleCreate({ ...values });
   };
   return (
     <Form
