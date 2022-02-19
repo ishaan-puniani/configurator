@@ -39,6 +39,13 @@
   }
 }
 
+.reelset-preview {
+  width: 100%;
+}
+.reelset-preview tr td {
+  border: 1px solid black;
+}
+
 /*Tags control */
 .ReactTags__tags {
   position: relative;
