@@ -107,7 +107,7 @@ export const BasicInfo = ({ data, handleCreate, handlePatch }: any) => {
 
       <Form.Item name={"bettingModes"} label="bettingModes">
         <Select mode="multiple">
-          <Select.Option value="forecast">By Forecase</Select.Option>
+          <Select.Option value="forecast">By Forecast</Select.Option>
           <Select.Option value="positional">By Position</Select.Option>
         </Select>
       </Form.Item>
