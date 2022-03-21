@@ -164,13 +164,13 @@ const BasicInfoForm = ({ data, handleCreate, handlePatch }: any) => {
           <Select.Option value="random-trigger-respin" disabled>
             Random Wild and Respin
           </Select.Option>
-          <Select.Option value="stick-and-trigger-respin" disabled>
+          <Select.Option value="stick-and-trigger-respin">
             Stick and Trigger Respin
           </Select.Option>
-          <Select.Option value="walk-left-and-trigger-respin" disabled>
+          <Select.Option value="walk-left-and-trigger-respin">
             Walk to left and Trigger Respin
           </Select.Option>
-          <Select.Option value="expand-trigger-respin" disabled>
+          <Select.Option value="expand-trigger-respin">
             Expand Wild and Respin
           </Select.Option>
         </Select>
